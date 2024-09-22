@@ -1,4 +1,2 @@
-# Sprint0.5F24
-
-
-### Arav Arora
+Samarth Tewari
+Arav Arora
