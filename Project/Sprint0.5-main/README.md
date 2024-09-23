@@ -9,4 +9,4 @@ Tucker Ritti
 
 Sammit Deshpande
 
-Arav Arora
+-Moksh Shah
