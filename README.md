@@ -6,6 +6,8 @@ tucker
 
 Samarth
 
+Moksh
+
 # CS 2340 Fall 2024 Repository
 > Please read these instructions then replace this `README.md` file with your own repository documentation as you see fit.
 
