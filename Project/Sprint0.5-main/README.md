@@ -1,4 +1,5 @@
 # Sprint0.5F24
-
-
-Sammit
+Samarth Tewari
+Arav Arora
+Tucker Ritti
+Sammit Deshpande
