@@ -21,18 +21,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SprintProject"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".HomeScreen"
+            android:name=".MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/title_activity_home_screen"
             android:logo="@drawable/app_icon_your_company"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.SprintProject">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SprintProject"
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,27 +39,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name=".CarFragment"
             android:exported="false" />
         <activity
-            android:name=".PlaybackActivity"
+            android:name=".CommunityFragment"
             android:exported="false" />
         <activity
-            android:name=".BrowseErrorActivity"
+            android:name=".HomeFragment"
             android:exported="false" />
         <activity
-            android:name=".HomeScreenActivity"
+            android:name=".HotelFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".NotebookFragment"
+            android:exported="false"
+            android:theme="@style/Theme.SprintProject" />
+        <activity
+            android:name=".RestaurantFragment"
+            android:exported="false"
+            android:theme="@style/Theme.SprintProject" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

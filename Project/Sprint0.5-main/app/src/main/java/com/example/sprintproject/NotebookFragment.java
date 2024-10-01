@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link NavBar#newInstance} factory method to
+ * Use the {@link NotebookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NavBar extends Fragment {
+public class NotebookFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class NavBar extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public NavBar() {
+    public NotebookFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class NavBar extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NavBar.
+     * @return A new instance of fragment NotebookFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NavBar newInstance(String param1, String param2) {
-        NavBar fragment = new NavBar();
+    public static NotebookFragment newInstance(String param1, String param2) {
+        NotebookFragment fragment = new NotebookFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class NavBar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav_bar, container, false);
+        return inflater.inflate(R.layout.fragment_notebook, container, false);
     }
 }
