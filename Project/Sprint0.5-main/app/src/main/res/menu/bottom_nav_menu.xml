@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Six Options, used reference from Video on YouTube referenced on activity_main.xml -->
+
+
+    <item
+        android:id="@+id/destination"
+        android:title="Destination"
+        android:icon="@drawable/destination" />
+
+    <item
+        android:id="@+id/restaurant"
+        android:title="Dining Establishments"
+        android:icon="@drawable/restaurant_icon_svgrepo_com" />
+
+
+
+    <item
+        android:id="@+id/hotel"
+        android:title="Accomodations"
+        android:icon="@drawable/hotel" />
+
+    <item
+        android:id="@+id/community"
+        android:title="Travel Community"
+        android:icon="@drawable/community_img" />
+
+    <item
+        android:id="@+id/car"
+        android:title="Transportation"
+        android:icon="@drawable/car" />
+
+</menu>
