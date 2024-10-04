@@ -17,8 +17,7 @@ import com.example.sprintproject.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     /**
-     * Taken inspiration from thsi video: https://www.youtube.com/watch?v=jOFLmKMOcK0 -->
-     *
+     * Taken inspiration from this video: https://www.youtube.com/watch?v=jOFLmKMOcK0 -->
      */
     ActivityMainBinding binding;
 
@@ -33,29 +32,29 @@ public class MainActivity extends AppCompatActivity {
          */
         ImageView homeImage = findViewById(R.id.home_image);
         homeImage.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             replaceFragment(new HomeFragment());
-                                         }
-                                     });
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new HomeFragment());
+            }
+        });
         binding.bottomNavigationView.setOnItemSelectedListener(clicked -> {
 
 
-                /**
-                case R.id.notebook:
-                    replaceFragment(new HomeFragment());
-                    break;
-                 */
-                if ( clicked.getItemId() == R.id.home_image) {
-                    replaceFragment(new HomeFragment());
-                }
-                if (clicked.getItemId() == com.example.sprintproject.R.id.destination) {
-                    replaceFragment(new DestinationFragment());
-                }
+            /**
+             case R.id.notebook:
+             replaceFragment(new HomeFragment());
+             break;
+             */
+            if (clicked.getItemId() == R.id.home_image) {
+                replaceFragment(new HomeFragment());
+            }
+            if (clicked.getItemId() == com.example.sprintproject.R.id.destination) {
+                replaceFragment(new DestinationFragment());
+            }
 
-                if (clicked.getItemId() == com.example.sprintproject.R.id.restaurant) {
-                    replaceFragment(new RestaurantFragment());
-                }
+            if (clicked.getItemId() == com.example.sprintproject.R.id.restaurant) {
+                replaceFragment(new RestaurantFragment());
+            }
 
             if (clicked.getItemId() == com.example.sprintproject.R.id.hotel) {
                 replaceFragment(new HotelFragment());
@@ -69,47 +68,47 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-                    /**
-                    replaceFragment(new DestinationFragment());
-                    break;
-                case R.id.restaurant:
-                    replaceFragment(new RestaurantFragment());
-                    break;
-                case R.id.hotel:
-                    replaceFragment(new HotelFragment());
-                    break;
-                case R.id.community:
-                    replaceFragment(new CommunityFragment());
-                    break;
-                case R.id.car:
-                    replaceFragment(new CarFragment());
-                    break;
-                     */
+            /**
+             replaceFragment(new DestinationFragment());
+             break;
+             case R.id.restaurant:
+             replaceFragment(new RestaurantFragment());
+             break;
+             case R.id.hotel:
+             replaceFragment(new HotelFragment());
+             break;
+             case R.id.community:
+             replaceFragment(new CommunityFragment());
+             break;
+             case R.id.car:
+             replaceFragment(new CarFragment());
+             break;
+             */
             return true;
 
 
         });
     }
-        /**
-         *
-        Button nextActivity = findViewById(R.id.nextActivityButton);
 
+    /**
+     * Button nextActivity = findViewById(R.id.nextActivityButton);
+     * <p>
+     * <p>
+     * nextActivity.setOnClickListener(new View.OnClickListener() {
+     * <p>
+     * public void onClick(View v) {
+     * Intent intent = new Intent(MainActivity.this, HomeScreen.class);
+     * startActivity(intent);
+     * }
+     * });
+     */
 
-        nextActivity.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeScreen.class);
-                startActivity(intent);
-            }
-        });
-         */
-
-        private void replaceFragment(Fragment fragment) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
-        }
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
+}
 
 
