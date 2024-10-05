@@ -1,2 +1,12 @@
 # Sprint0.5F24
-Samarth -- updated
+Vasili Fovos
+
+Samarth Tewari
+
+Arav Arora
+
+Tucker Ritti
+
+Sammit Deshpande
+
+Moksh Shah

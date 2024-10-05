@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,18 +13,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SprintProject"
         tools:targetApi="31">
+
+
         <activity
-            android:name=".logInPage"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".view.MainActivity"
+            android:banner="@drawable/app_icon_your_company"
+            android:exported="true"
+            android:icon="@drawable/app_icon_your_company"
+            android:label="@string/title_activity_home_screen"
+            android:logo="@drawable/app_icon_your_company"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SprintProject"
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.CarFragment"
+            android:exported="false" />
+        <activity
+            android:name=".view.CommunityFragment"
+            android:exported="false" />
+        <activity
+            android:name=".view.HomeFragment"
+            android:exported="false" />
+        <activity
+            android:name=".view.HotelFragment"
+            android:exported="false"
+            android:theme="@style/Theme.SprintProject" />
+        <activity
+            android:name=".view.NotebookFragment"
+            android:exported="false"
+            android:theme="@style/Theme.SprintProject" />
+        <activity
+            android:name=".view.RestaurantFragment"
+            android:exported="false"
+            android:theme="@style/Theme.SprintProject" />
     </application>
 
 </manifest>
