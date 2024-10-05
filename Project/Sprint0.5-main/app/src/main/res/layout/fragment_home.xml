@@ -17,7 +17,6 @@
         android:layout_marginTop="50dp"
         android:paddingTop="30dp"
         android:paddingLeft="20dp"
-        <!-- make sure to add better padding -->
         android:layout_marginBottom="50dp">
 
 

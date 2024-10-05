@@ -52,6 +52,15 @@
             android:name=".view.RestaurantFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
+        <activity
+            android:name=".view.WelcomePage"
+            android:exported="false" />
+        <activity
+            android:name=".view.logInPage"
+            android:exported="false" />
+        <activity
+            android:name=".view.signUpPage"
+            android:exported="false" />
     </application>
 
 </manifest>

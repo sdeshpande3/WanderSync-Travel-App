@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import android.content.Intent;
 
 import android.os.Bundle;
 import android.view.View;
@@ -24,18 +25,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+
+        Intent intent = new Intent(MainActivity.this, WelcomePage.class);
+        startActivity(intent);
+        finish();
 
         /**
          * Bottom navigation bar
          */
         ImageView homeImage = findViewById(R.id.home_image);
         homeImage.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             replaceFragment(new HomeFragment());
-                                         }
-                                     });
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new HomeFragment());
+            }
+        });
         binding.bottomNavigationView.setOnItemSelectedListener(clicked -> {
 
 

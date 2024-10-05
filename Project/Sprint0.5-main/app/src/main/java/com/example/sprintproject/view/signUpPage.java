@@ -1,4 +1,4 @@
-package com.example.sprintproject;
+package com.example.sprintproject.view;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.sprintproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
-public class logInPage extends AppCompatActivity {
+public class signUpPage extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText emailInput;
@@ -32,7 +33,7 @@ public class logInPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in_page);
+        setContentView(R.layout.activity_sign_up_page);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -61,12 +62,12 @@ public class logInPage extends AppCompatActivity {
 
                 // Input validation
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(logInPage.this, "Please enter an email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(signUpPage.this, "Please enter an email", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(logInPage.this, "Please enter a password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(signUpPage.this, "Please enter a password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -90,11 +91,11 @@ public class logInPage extends AppCompatActivity {
                                 String userId = user.getUid();
                                 saveEmailToDatabase(userId, email);
                             }
-                            Toast.makeText(logInPage.this, "Sign Up successful!",
+                            Toast.makeText(signUpPage.this, "Sign Up successful!",
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             // Sign-up failure
-                            Toast.makeText(logInPage.this, "Sign Up failed: " + task.getException().getMessage(),
+                            Toast.makeText(signUpPage.this, "Sign Up failed: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -112,10 +113,10 @@ public class logInPage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NotNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(logInPage.this, "Email saved to database.",
+                            Toast.makeText(signUpPage.this, "Email saved to database.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(logInPage.this, "Failed to save email: " + task.getException().getMessage(),
+                            Toast.makeText(signUpPage.this, "Failed to save email: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
