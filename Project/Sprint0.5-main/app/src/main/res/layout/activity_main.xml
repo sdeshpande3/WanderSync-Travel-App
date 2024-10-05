@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
 
 
@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/home_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="left"
