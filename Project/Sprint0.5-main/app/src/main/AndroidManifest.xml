@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
-    <uses-feature
-        android:name="android.software.leanback"
-        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +14,9 @@
         android:theme="@style/Theme.SprintProject"
         tools:targetApi="31">
 
+
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
             android:icon="@drawable/app_icon_your_company"
@@ -39,27 +32,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CarFragment"
+            android:name=".view.CarFragment"
             android:exported="false" />
         <activity
-            android:name=".CommunityFragment"
+            android:name=".view.CommunityFragment"
             android:exported="false" />
         <activity
-            android:name=".HomeFragment"
+            android:name=".view.HomeFragment"
             android:exported="false" />
         <activity
-            android:name=".HotelFragment"
+            android:name=".view.HotelFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
         <activity
-            android:name=".NotebookFragment"
+            android:name=".view.NotebookFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
         <activity
-            android:name=".RestaurantFragment"
+            android:name=".view.RestaurantFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
-
     </application>
 
 </manifest>
