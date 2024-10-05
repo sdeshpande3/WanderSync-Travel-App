@@ -14,11 +14,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
         android:paddingTop="20dp"
-        android:text="Accomodations"
+        android:text="Accomodations Screen"
         android:textSize="20dp" />
 
     <ImageView
