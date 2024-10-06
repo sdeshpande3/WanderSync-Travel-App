@@ -1,4 +1,4 @@
-package com.example.sprintproject.pages.view;
+package com.example.sprintproject.activities.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
 import com.example.sprintproject.model.Authentication;
-import com.example.sprintproject.pages.viewmodel.SignUpViewModel;
+import com.example.sprintproject.activities.viewmodel.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -35,11 +35,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         // Apply edge-to-edge insets for the activity
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
 
         // Reference to input fields and button
         EditText emailInput = findViewById(R.id.email_input);

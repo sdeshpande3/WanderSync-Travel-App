@@ -1,18 +1,18 @@
-package com.example.sprintproject.pages.viewmodel;
+package com.example.sprintproject.activities.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Authentication;
 
-public class LogInViewModel extends ViewModel {
+public class SignUpViewModel extends ViewModel {
     private final Authentication authenticationModel;
 
-    public LogInViewModel() {
+    public SignUpViewModel() {
         this.authenticationModel = new Authentication();
     }
 
-    public void login(String username, String password) {
-        authenticationModel.login(username, password);
+    public void signUp(String username, String password) {
+        authenticationModel.register(username, password);
     }
 
     public boolean userIsLoggedIn() {
