@@ -10,52 +10,55 @@ public class Authentication {
     private MutableLiveData<FirebaseUser> userLiveData;
 
     public Authentication() {
-        firebaseAuth = FirebaseAuth.getInstance();
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.userLiveData = new MutableLiveData<>();
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            this.userLiveData.postValue(firebaseAuth.getCurrentUser());
+        }
     }
 
     public MutableLiveData<FirebaseUser> getUserLiveData() {
         return this.userLiveData;
     }
 
-    public static class AuthenticationFailure extends RuntimeException {
-        public AuthenticationFailure(String message) {
-            super(message);
-        }
+    public interface AuthCallback {
+        void onSuccess();
+
+        void onFailure(String message);
     }
 
     /**
      * Login a user with username and password
+     *
      * @param username Username to sign in with
      * @param password Password to sign in with
      */
-    public void login(String username, String password) throws AuthenticationFailure {
+    public void login(String username, String password, AuthCallback callback) {
         firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 userLiveData.postValue(firebaseAuth.getCurrentUser());
+                callback.onSuccess();
             } else {
                 userLiveData.postValue(null);
 
-                if (task.getException() != null) {
-                    throw new AuthenticationFailure("Unknown error");
-                } else {
-                    throw new AuthenticationFailure(task.getException().getMessage());
-                }
+                String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                callback.onFailure(errorMessage);
             }
         });
     }
 
-    public void register(String username, String password) {
+    public void register(String username, String password, AuthCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 userLiveData.postValue(firebaseAuth.getCurrentUser());
+
+                callback.onSuccess();
             } else {
                 userLiveData.postValue(null);
 
-                if (task.getException() != null) {
-                    throw new AuthenticationFailure("Unknown error");
-                } else {
-                    throw new AuthenticationFailure(task.getException().getMessage());
-                }
+                String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                callback.onFailure(errorMessage);
             }
         });
     }

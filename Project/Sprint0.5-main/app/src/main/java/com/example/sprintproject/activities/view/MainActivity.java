@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Intent;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import com.example.sprintproject.R;
+import com.example.sprintproject.activities.viewmodel.MainViewModel;
 import com.example.sprintproject.databinding.ActivityMainBinding;
 import com.example.sprintproject.fragments.view.DestinationFragment;
 import com.example.sprintproject.fragments.view.LogisticsFragment;
@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        binding.setViewModel(mainViewModel);
+        binding.setLifecycleOwner(this);
 
         // Home page
         replaceFragment(new LogisticsFragment());

@@ -8,12 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
+import com.example.sprintproject.databinding.ActivityLogInPageBinding;
 import com.example.sprintproject.model.Authentication;
 import com.example.sprintproject.activities.viewmodel.LogInViewModel;
 
@@ -22,9 +20,12 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in_page);
+        ActivityLogInPageBinding binding = ActivityLogInPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         LogInViewModel logInViewModel = new ViewModelProvider(this).get(LogInViewModel.class);
+        binding.setViewModel(logInViewModel);
+        binding.setLifecycleOwner(this);
 
         if (logInViewModel.userIsLoggedIn()) {
             // User is already logged in, navigate to MainActivity
@@ -33,13 +34,6 @@ public class LogInActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-        // Apply edge-to-edge insets for the activity
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         // Reference to input fields and buttons
         EditText usernameInput = findViewById(R.id.username_input);
@@ -70,16 +64,19 @@ public class LogInActivity extends AppCompatActivity {
                 return;
             }
 
-            try {
-                logInViewModel.login(username, password);
-            } catch (Authentication.AuthenticationFailure e) {
-                // Login failure
-                Toast.makeText(LogInActivity.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                return;
-            }
+            logInViewModel.login(username, password, new Authentication.AuthCallback() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
-            // Login success
-            Toast.makeText(LogInActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(String message) {
+                    Toast.makeText(LogInActivity.this, "Login failed: " + message, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }
