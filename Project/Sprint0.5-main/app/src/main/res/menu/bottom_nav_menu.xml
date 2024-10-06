@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Six Options, used reference from Video on YouTube referenced on activity_main.xml -->
-
+    <item
+        android:id="@+id/logistics"
+        android:title="Logistics"
+        android:icon="@drawable/home" />
 
     <item
         android:id="@+id/destination"
@@ -11,25 +14,18 @@
         android:icon="@drawable/destination" />
 
     <item
-        android:id="@+id/restaurant"
-        android:title="Dining Establishments"
+        android:id="@+id/dining"
+        android:title="Dining"
         android:icon="@drawable/restaurant_icon_svgrepo_com" />
 
-
-
     <item
-        android:id="@+id/hotel"
-        android:title="Accomodations"
+        android:id="@+id/accommodations"
+        android:title="Accommodations"
         android:icon="@drawable/hotel" />
 
     <item
-        android:id="@+id/community"
-        android:title="Travel Community"
-        android:icon="@drawable/community_img" />
-
-    <item
-        android:id="@+id/car"
-        android:title="Transportation"
+        android:id="@+id/travel"
+        android:title="Travel"
         android:icon="@drawable/car" />
 
 </menu>

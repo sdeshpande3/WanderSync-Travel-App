@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccomodationsFragment">
+    tools:context=".fragments.view.TravelFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
@@ -15,11 +16,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             android:paddingTop="20dp"
-            android:text="ACCOMODATIONS"
+            android:text="Travel Screen"
             android:textSize="20dp" />
 
         <ImageView
@@ -27,7 +29,7 @@
             android:id="@+id/car_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/hotel" />
+            android:src="@drawable/plane" />
 
     </LinearLayout>
 
