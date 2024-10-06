@@ -16,7 +16,7 @@
 
 
         <activity
-            android:name=".view.MainActivity"
+            android:name=".pages.view.MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
             android:icon="@drawable/app_icon_your_company"
@@ -32,34 +32,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.CarFragment"
+            android:name=".fragments.view.CarFragment"
             android:exported="false" />
         <activity
-            android:name=".view.CommunityFragment"
+            android:name=".fragments.view.CommunityFragment"
             android:exported="false" />
         <activity
-            android:name=".view.HomeFragment"
+            android:name=".fragments.view.HomeFragment"
             android:exported="false" />
         <activity
-            android:name=".view.HotelFragment"
+            android:name=".fragments.view.HotelFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
         <activity
-            android:name=".view.NotebookFragment"
+            android:name=".fragments.view.NotebookFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
         <activity
-            android:name=".view.RestaurantFragment"
+            android:name=".fragments.view.RestaurantFragment"
             android:exported="false"
             android:theme="@style/Theme.SprintProject" />
         <activity
-            android:name=".view.WelcomePage"
+            android:name=".pages.view.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.logInPage"
+            android:name=".pages.view.LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".view.signUpPage"
+            android:name=".pages.view.SignUpActivity"
             android:exported="false" />
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.sprintproject.view;
+package com.example.sprintproject.pages.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sprintproject.R;
 
-public class WelcomePage extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class WelcomePage extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WelcomePage.this, logInPage.class);
+                Intent intent = new Intent(WelcomeActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
         });

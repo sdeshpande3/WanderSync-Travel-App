@@ -1,4 +1,4 @@
-package com.example.sprintproject.view;
+package com.example.sprintproject.fragments.view;
 
 import android.os.Bundle;
 
