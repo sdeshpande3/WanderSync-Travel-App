@@ -1,4 +1,6 @@
 
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".MainActivity">
+
+    tools:context=".view.MainActivity">
 
 
 
@@ -23,8 +26,8 @@
 
         <ImageView
             android:id="@+id/home_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="left"
@@ -43,8 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
 
