@@ -8,12 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
+import com.example.sprintproject.databinding.ActivitySignUpPageBinding;
 import com.example.sprintproject.model.Authentication;
 import com.example.sprintproject.activities.viewmodel.SignUpViewModel;
 
@@ -22,9 +20,13 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_page);
+
+        ActivitySignUpPageBinding binding = ActivitySignUpPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         SignUpViewModel signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+        binding.setViewModel(signUpViewModel);
+        binding.setLifecycleOwner(this);
 
         if (signUpViewModel.userIsLoggedIn()) {
             // User is already logged in, navigate to MainActivity
@@ -33,13 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-        // Apply edge-to-edge insets for the activity
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         // Reference to input fields and button
         EditText emailInput = findViewById(R.id.email_input);
@@ -62,16 +57,19 @@ public class SignUpActivity extends AppCompatActivity {
                 return;
             }
 
-            try {
-                signUpViewModel.signUp(email, password);
-            } catch (Authentication.AuthenticationFailure e) {
-                // Sign up failure
-                Toast.makeText(SignUpActivity.this, "Sign Up failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                return;
-            }
+            signUpViewModel.signUp(email, password, new Authentication.AuthCallback() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
-            // Sign up success
-            Toast.makeText(SignUpActivity.this, "Sign Up successful!", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(String message) {
+                    Toast.makeText(SignUpActivity.this, "Sign Up failed: " + message, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }

@@ -2,9 +2,7 @@ package com.example.sprintproject.activities.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,28 +20,28 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         WelcomeViewModel welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
+        binding.setViewModel(welcomeViewModel);
+        binding.setLifecycleOwner(this);
 
         // Reference to the TextViews and Buttons
         Button startButton = findViewById(R.id.start_button);
         Button quitButton = findViewById(R.id.quit_button);
+        Button signOutButton = findViewById(R.id.sign_out_button);
 
         // Set onClickListener for the Start button to open Login page
-//        startButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-//            startActivity(intent);
-//        });
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        startButton.setOnClickListener(v -> {
+            Intent intent = new Intent(WelcomeActivity.this, (welcomeViewModel.userIsLoggedIn()) ? MainActivity.class : LogInActivity.class);
+            startActivity(intent);
         });
 
         // Set onClickListener for the Quit button to exit the app
-//        quitButton.setOnClickListener(v -> {
-//            finish(); // Close the current activity
-//            System.exit(0); // Exit the app
-//        });
+        quitButton.setOnClickListener(v -> {
+            finish(); // Close the current activity
+            System.exit(0); // Exit the app
+        });
+
+        signOutButton.setOnClickListener(v -> {
+            welcomeViewModel.signOut();
+        });
     }
 }
