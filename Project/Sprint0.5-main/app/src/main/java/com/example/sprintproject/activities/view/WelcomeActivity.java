@@ -18,7 +18,8 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityWelcomePageBinding binding = ActivityWelcomePageBinding.inflate(getLayoutInflater());
+        ActivityWelcomePageBinding binding =
+                ActivityWelcomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         WelcomeViewModel welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
@@ -32,7 +33,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Set onClickListener for the Start button to open Login page
         startButton.setOnClickListener(v -> {
-            Intent intent = new Intent(WelcomeActivity.this, (welcomeViewModel.userIsLoggedIn()) ? MainActivity.class : LogInActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this,
+                    (welcomeViewModel.userIsLoggedIn()) ? MainActivity.class : LogInActivity.class);
             startActivity(intent);
         });
 

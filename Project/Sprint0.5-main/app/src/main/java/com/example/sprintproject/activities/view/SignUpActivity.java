@@ -49,12 +49,14 @@ public class SignUpActivity extends AppCompatActivity {
 
             // Input validation
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(SignUpActivity.this, "Please enter an email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this,
+                        "Please enter an email", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(SignUpActivity.this, "Please enter a password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this,
+                        "Please enter a password", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -68,7 +70,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String message) {
-                    Toast.makeText(SignUpActivity.this, "Sign Up failed: " + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this,
+                            "Sign Up failed: " + message, Toast.LENGTH_SHORT).show();
                 }
             });
         });
