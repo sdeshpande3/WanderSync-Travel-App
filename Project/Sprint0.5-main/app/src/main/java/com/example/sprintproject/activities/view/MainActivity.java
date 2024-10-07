@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
 
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
