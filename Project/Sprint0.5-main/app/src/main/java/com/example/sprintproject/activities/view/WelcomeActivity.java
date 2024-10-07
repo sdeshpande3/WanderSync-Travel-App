@@ -13,6 +13,7 @@ import com.example.sprintproject.activities.viewmodel.WelcomeViewModel;
 import com.example.sprintproject.databinding.ActivityWelcomePageBinding;
 
 public class WelcomeActivity extends AppCompatActivity {
+    //splash page it goes here first when you open the app
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
