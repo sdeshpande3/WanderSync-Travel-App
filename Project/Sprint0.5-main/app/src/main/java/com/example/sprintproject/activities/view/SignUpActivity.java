@@ -39,7 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Reference to input fields and button
         EditText emailInput = findViewById(R.id.email_input);
+        // EditText usernameInput = findViewById(R.id.username_input);
         EditText passwordInput = findViewById(R.id.password_input);
+        // EditText confirmPasswordInput = findViewById(R.id.confirm_password_input);   
         Button signUpButton = findViewById(R.id.signup_button);
 
         // Set the onClickListener for the Sign Up button
