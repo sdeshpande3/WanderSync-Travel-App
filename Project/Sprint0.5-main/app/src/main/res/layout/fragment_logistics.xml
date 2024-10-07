@@ -52,17 +52,17 @@
             android:text="Georgia Tech's Premier Travelling App"
             android:textSize="20sp" />
 
+
         <ImageView
             android:id="@+id/mainImageView"
             android:layout_width="270dp"
             android:layout_height="270dp"
+            android:layout_marginTop="50dp"
             android:contentDescription="Main image"
+
             android:src="@drawable/travel_svgrepo_com"
-
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp" />
-
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
