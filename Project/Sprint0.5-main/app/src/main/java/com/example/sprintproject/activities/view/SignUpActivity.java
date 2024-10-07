@@ -16,6 +16,7 @@ import com.example.sprintproject.model.Authentication;
 import com.example.sprintproject.activities.viewmodel.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
+    // Sign up page goes here if we do not have an account currently
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

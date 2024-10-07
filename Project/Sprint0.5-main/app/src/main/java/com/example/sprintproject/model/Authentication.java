@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+// handles all auth stuff, in single class
 public class Authentication {
+
     private final FirebaseAuth firebaseAuth;
     private MutableLiveData<FirebaseUser> userLiveData;
 

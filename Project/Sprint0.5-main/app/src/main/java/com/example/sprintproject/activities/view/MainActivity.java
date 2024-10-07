@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Taken inspiration from this video: https://www.youtube.com/watch?v=jOFLmKMOcK0
      */
+
+
     ActivityMainBinding binding;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
          * Bottom navigation bar
          */
         binding.bottomNavigationView.setOnItemSelectedListener(clicked -> {
+            /* Need to fix to use gaurd clauses*/
             if (clicked.getItemId() == R.id.logistics) {
                 replaceFragment(new LogisticsFragment());
             } else if (clicked.getItemId() == R.id.destination) {
