@@ -3,6 +3,7 @@ package com.example.sprintproject.activities.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,6 +43,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         signOutButton.setOnClickListener(v -> {
             welcomeViewModel.signOut();
+            Toast.makeText(this, "Signed out successfully", Toast.LENGTH_SHORT).show();
         });
     }
 }
