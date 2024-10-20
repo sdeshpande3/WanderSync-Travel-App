@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Taken inspiration from this video: https://www.youtube.com/watch?v=jOFLmKMOcK0
      */
-    ActivityMainBinding binding;
+
+
+    private ActivityMainBinding binding;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
          * Bottom navigation bar
          */
         binding.bottomNavigationView.setOnItemSelectedListener(clicked -> {
+            /* Need to fix to use gaurd clauses*/
             if (clicked.getItemId() == R.id.logistics) {
                 replaceFragment(new LogisticsFragment());
             } else if (clicked.getItemId() == R.id.destination) {
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Replace fragment
+     */
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

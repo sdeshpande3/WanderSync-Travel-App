@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Authentication;
 import com.google.firebase.auth.FirebaseUser;
-
+// we are brought here when we need to log in
 public class LogInViewModel extends ViewModel {
     private final Authentication authenticationModel;
 

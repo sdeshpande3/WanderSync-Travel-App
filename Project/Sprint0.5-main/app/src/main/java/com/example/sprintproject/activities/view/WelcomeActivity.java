@@ -3,6 +3,7 @@ package com.example.sprintproject.activities.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,11 +13,13 @@ import com.example.sprintproject.activities.viewmodel.WelcomeViewModel;
 import com.example.sprintproject.databinding.ActivityWelcomePageBinding;
 
 public class WelcomeActivity extends AppCompatActivity {
+    //splash page it goes here first when you open the app
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityWelcomePageBinding binding = ActivityWelcomePageBinding.inflate(getLayoutInflater());
+        ActivityWelcomePageBinding binding =
+                ActivityWelcomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         WelcomeViewModel welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
@@ -30,7 +33,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Set onClickListener for the Start button to open Login page
         startButton.setOnClickListener(v -> {
-            Intent intent = new Intent(WelcomeActivity.this, (welcomeViewModel.userIsLoggedIn()) ? MainActivity.class : LogInActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this,
+                    (welcomeViewModel.userIsLoggedIn()) ? MainActivity.class : LogInActivity.class);
             startActivity(intent);
         });
 
@@ -42,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         signOutButton.setOnClickListener(v -> {
             welcomeViewModel.signOut();
+            Toast.makeText(this, "Signed out successfully", Toast.LENGTH_SHORT).show();
         });
     }
 }
