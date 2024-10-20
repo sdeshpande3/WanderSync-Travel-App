@@ -16,6 +16,7 @@ import com.example.sprintproject.model.Authentication;
 import com.example.sprintproject.activities.viewmodel.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
+    // Sign up page goes here if we do not have an account currently
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Reference to input fields and button
         EditText emailInput = findViewById(R.id.email_input);
+        // EditText usernameInput = findViewById(R.id.username_input);
         EditText passwordInput = findViewById(R.id.password_input);
+        // EditText confirmPasswordInput = findViewById(R.id.confirm_password_input);   
         Button signUpButton = findViewById(R.id.signup_button);
 
         // Set the onClickListener for the Sign Up button
@@ -48,12 +51,14 @@ public class SignUpActivity extends AppCompatActivity {
 
             // Input validation
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(SignUpActivity.this, "Please enter an email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this,
+                        "Please enter an email", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(SignUpActivity.this, "Please enter a password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this,
+                        "Please enter a password", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -67,7 +72,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String message) {
-                    Toast.makeText(SignUpActivity.this, "Sign Up failed: " + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this,
+                            "Sign Up failed: " + message, Toast.LENGTH_SHORT).show();
                 }
             });
         });

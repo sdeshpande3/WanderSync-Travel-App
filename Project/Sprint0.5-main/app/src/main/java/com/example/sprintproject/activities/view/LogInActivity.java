@@ -55,26 +55,30 @@ public class LogInActivity extends AppCompatActivity {
 
             // Input validation
             if (TextUtils.isEmpty(username)) {
-                Toast.makeText(LogInActivity.this, "Please enter a username", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogInActivity.this, "Please enter a username",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(LogInActivity.this, "Please enter a password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogInActivity.this, "Please enter a password",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
             logInViewModel.login(username, password, new Authentication.AuthCallback() {
                 @Override
                 public void onSuccess() {
-                    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LogInActivity.this,
+                            MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
 
                 @Override
                 public void onFailure(String message) {
-                    Toast.makeText(LogInActivity.this, "Login failed: " + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogInActivity.this,
+                            "Login failed: " + message, Toast.LENGTH_SHORT).show();
                 }
             });
         });
