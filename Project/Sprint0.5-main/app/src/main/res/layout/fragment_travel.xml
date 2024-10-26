@@ -25,10 +25,10 @@
             android:textSize="20dp" />
 
         <ImageView
-            android:layout_gravity="center_horizontal"
             android:id="@+id/car_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/plane" />
 
     </LinearLayout>
