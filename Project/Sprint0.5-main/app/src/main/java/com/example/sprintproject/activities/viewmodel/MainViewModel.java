@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
     public MainViewModel() {
-        // For future
+
+        // This will be used when in the next sprint
     }
+
 }
