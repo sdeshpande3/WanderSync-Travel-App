@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ActivityMainBinding binding;
-// Method to run when page created
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Replace fragment uses the fragment manager to do so
-    
+     @param fragment The fragment to replace the current fragment with
      */
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

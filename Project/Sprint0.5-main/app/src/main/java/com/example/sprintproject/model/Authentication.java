@@ -19,22 +19,7 @@ public class Authentication {
         }
     }
 
-    public MutableLiveData<FirebaseUser> getUserLiveData() {
-        return this.userLiveData;
-    }
 
-    public interface AuthCallback {
-        void onSuccess();
-
-        void onFailure(String message);
-    }
-
-    /**
-     * Login a user with username and password
-     *
-     * @param username Username to sign in with
-     * @param password Password to sign in with
-     */
     public void login(String username, String password, AuthCallback callback) {
         firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -43,22 +28,8 @@ public class Authentication {
             } else {
                 userLiveData.postValue(null);
 
-                String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
-                callback.onFailure(errorMessage);
-            }
-        });
-    }
-
-    public void register(String username, String password, AuthCallback callback) {
-        firebaseAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                userLiveData.postValue(firebaseAuth.getCurrentUser());
-
-                callback.onSuccess();
-            } else {
-                userLiveData.postValue(null);
-
-                String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                String errorMessage = (task.getException() != null
+                        ? task.getException().getMessage() : "Unknown error");
                 callback.onFailure(errorMessage);
             }
         });
@@ -68,4 +39,53 @@ public class Authentication {
         firebaseAuth.signOut();
         userLiveData.postValue(null);
     }
+
+
+
+    /**
+     * Login a user with username and password
+     *
+     * @param username Username to sign in with
+     *
+     * @param password Password to sign in with
+     * @param callback Callback to handle success or failure
+     */
+
+
+
+
+    public void register(String username, String password, AuthCallback callback) {
+        firebaseAuth.createUserWithEmailAndPassword(username, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        userLiveData.postValue(firebaseAuth.getCurrentUser());
+                        callback.onSuccess();
+                    } else {
+                        userLiveData.postValue(null);
+
+                        String errorMessage;
+                        errorMessage = (task.getException() != null)
+                                ? task.getException().getMessage() : "Unknown error";
+                        callback.onFailure(errorMessage);
+                    }
+                });
+    }
+
+    public MutableLiveData<FirebaseUser> getUserLiveData() {
+        return this.userLiveData;
+    }
+
+
+
+    public interface AuthCallback {
+        void onSuccess();
+
+        void onFailure(String message);
+    }
+
+
+
+
+
+
 }
