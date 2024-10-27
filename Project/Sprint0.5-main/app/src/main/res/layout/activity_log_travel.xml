@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.sprintproject.activities.viewmodel.LogTravelViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/logTravelButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Log Travel"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+
+        <!-- Travel Location Input Field -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Travel Location"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"/>
+
+        <EditText
+            android:id="@+id/travelLocationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter location"
+            android:inputType="text"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="@={viewModel.travelLocation}"/>
+
+        <!-- Start and End Date Input Fields -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <!-- Estimated Start Date -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estimated Start:"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/estimatedStartDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="MM/DD/YYYY"
+                    android:inputType="date"
+                    android:padding="8dp"
+                    android:text="@={viewModel.estimatedStart}"/>
+            </LinearLayout>
+
+            <!-- Spacer between the two input fields -->
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent"/>
+
+            <!-- Estimated End Date -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estimated End:"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/estimatedEndDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="MM/DD/YYYY"
+                    android:inputType="date"
+                    android:padding="8dp"
+                    android:text="@={viewModel.estimatedEnd}"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Buttons for Cancel and Submit -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_red_light"/>
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_light"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
