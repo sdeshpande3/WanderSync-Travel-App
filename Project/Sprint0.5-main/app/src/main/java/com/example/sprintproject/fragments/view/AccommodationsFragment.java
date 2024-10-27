@@ -14,6 +14,7 @@ import com.example.sprintproject.R;
  * A simple {@link Fragment} subclass.
  * Use the {@link AccommodationsFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * Here's the code for the AccommodationsFragment:
  */
 public class AccommodationsFragment extends Fragment {
 
