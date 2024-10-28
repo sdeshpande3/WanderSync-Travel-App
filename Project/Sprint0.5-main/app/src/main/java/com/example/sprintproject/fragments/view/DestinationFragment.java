@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sprintproject.R;
 import com.example.sprintproject.activities.view.LogTravelActivity;
+import com.example.sprintproject.activities.view.VacationTimeActivity;
 
 public class DestinationFragment extends Fragment {
 
@@ -45,6 +46,12 @@ public class DestinationFragment extends Fragment {
         Button logTravelButton = view.findViewById(R.id.logTravelButton);
         logTravelButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), LogTravelActivity.class);
+            startActivity(intent);
+        });
+
+        Button calculateVacationTime = view.findViewById(R.id.calculateVacationTimeButton);
+        calculateVacationTime.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), VacationTimeActivity.class);
             startActivity(intent);
         });
 

@@ -11,33 +11,9 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 public class VacationTimeViewModel extends ViewModel {
-    private final MutableLiveData<String> startDate = new MutableLiveData<>("");
-    private final MutableLiveData<String> endDate = new MutableLiveData<>("");
-    private final MutableLiveData<String> duration = new MutableLiveData<>("");
-
-    public LiveData<String> getStartDate() {
-        return startDate;
-    }
-
-    public LiveData<String> getEndDate() {
-        return endDate;
-    }
-
-    public LiveData<String> getDuration() {
-        return duration;
-    }
-
-    public void setStartDate(String startDateInput) {
-        startDate.setValue(startDateInput);
-    }
-
-    public void setEndDate(String endDateInput) {
-        endDate.setValue(endDateInput);
-    }
-
-    public void setDuration(String durationInput) {
-        duration.setValue(durationInput);
-    }
+    public MutableLiveData<String> startDate = new MutableLiveData<>("");
+    public MutableLiveData<String> endDate = new MutableLiveData<>("");
+    public MutableLiveData<String> duration = new MutableLiveData<>("");
 
     public void calculateFieldsIfNeeded() {
         if (startDate.getValue() != null && endDate.getValue() != null && (duration.getValue() == null || duration.getValue().isEmpty())) {
