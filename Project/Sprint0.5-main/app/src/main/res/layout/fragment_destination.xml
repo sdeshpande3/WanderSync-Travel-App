@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
     <!-- Title TextView -->
     <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Destination"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="24dp"/>
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Destination"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="24dp" />
 
     <!-- Log Travel Button -->
     <Button
-        android:id="@+id/logTravelButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Log Travel"
-        android:layout_gravity="center_horizontal"
-        android:padding="12dp"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"/>
+            android:id="@+id/logTravelButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Log Travel"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     <!-- Calculate Vacation Time Button -->
     <Button
-        android:id="@+id/calculateVacationTimeButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Calculate Vacation Time"
-        android:layout_gravity="center_horizontal"
-        android:padding="12dp"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+            android:id="@+id/calculateVacationTimeButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Calculate Vacation Time"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
+    <LinearLayout
+            android:id="@+id/layoutTravelLogs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F8F8F8" />
 
 </LinearLayout>

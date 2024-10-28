@@ -2,7 +2,6 @@ package com.example.sprintproject.activities.view;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +11,7 @@ import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityLogTravelBinding;
 import com.example.sprintproject.activities.viewmodel.LogTravelViewModel;
 
-import java.util.regex.Pattern;
-
 public class LogTravelActivity extends AppCompatActivity {
-    private static final Pattern DATE_PATTERN =
-            Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +24,6 @@ public class LogTravelActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         // Reference to input fields and button
-        EditText travelLocationInput = findViewById(R.id.travelLocationInput);
-        EditText estimatedStartInput = findViewById(R.id.estimatedStartDateInput);
-        EditText estimatedEndInput = findViewById(R.id.estimatedEndDateInput);
         Button cancelButton = findViewById(R.id.cancelButton);
         Button logTravelButton = findViewById(R.id.submitButton);
 
@@ -42,56 +33,21 @@ public class LogTravelActivity extends AppCompatActivity {
 
         // Set the onClickListener for the Log Travel button
         logTravelButton.setOnClickListener(v -> {
-            String travelLocation = travelLocationInput.getText().toString().trim();
-            String estimatedStart = estimatedStartInput.getText().toString().trim();
-            String estimatedEnd = estimatedEndInput.getText().toString().trim();
-
-            // Input validation
-            if (travelLocation.isEmpty()) {
-                Toast.makeText(LogTravelActivity.this, "Please enter a travel location",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (estimatedStart.isEmpty()) {
-                Toast.makeText(LogTravelActivity.this, "Please enter an estimated start date",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (estimatedEnd.isEmpty()) {
-                Toast.makeText(LogTravelActivity.this, "Please enter an estimated end date",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (!isValidDate(estimatedStart)) {
-                Toast.makeText(LogTravelActivity.this, "Invalid start date. Use MM/DD/YYYY format.",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (!isValidDate(estimatedEnd)) {
-                Toast.makeText(LogTravelActivity.this, "Invalid end date. Use MM/DD/YYYY format.",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             // Trigger ViewModel method to handle data logging
-            logTravelViewModel.logTravelData(travelLocation, estimatedStart, estimatedEnd);
+            try {
+                logTravelViewModel.logTravelData();
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(LogTravelActivity.this, e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Toast.makeText(LogTravelActivity.this, "Travel data logged successfully",
                     Toast.LENGTH_SHORT).show();
-
-            // Clear input fields after successful logging
-            travelLocationInput.setText("");
-            estimatedStartInput.setText("");
-            estimatedEndInput.setText("");
 
             finish();
         });
     }
 
-    private boolean isValidDate(String date) {
-        return DATE_PATTERN.matcher(date).matches();
-    }
+
 }
