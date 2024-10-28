@@ -12,7 +12,11 @@ import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityLogTravelBinding;
 import com.example.sprintproject.activities.viewmodel.LogTravelViewModel;
 
+import java.util.regex.Pattern;
+
 public class LogTravelActivity extends AppCompatActivity {
+    private static final Pattern DATE_PATTERN =
+            Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,12 @@ public class LogTravelActivity extends AppCompatActivity {
         EditText travelLocationInput = findViewById(R.id.travelLocationInput);
         EditText estimatedStartInput = findViewById(R.id.estimatedStartDateInput);
         EditText estimatedEndInput = findViewById(R.id.estimatedEndDateInput);
-        Button logTravelButton = findViewById(R.id.logTravelButton);
+        Button cancelButton = findViewById(R.id.cancelButton);
+        Button logTravelButton = findViewById(R.id.submitButton);
+
+        cancelButton.setOnClickListener(v -> {
+            finish();
+        });
 
         // Set the onClickListener for the Log Travel button
         logTravelButton.setOnClickListener(v -> {
@@ -56,6 +65,18 @@ public class LogTravelActivity extends AppCompatActivity {
                 return;
             }
 
+            if (!isValidDate(estimatedStart)) {
+                Toast.makeText(LogTravelActivity.this, "Invalid start date. Use MM/DD/YYYY format.",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!isValidDate(estimatedEnd)) {
+                Toast.makeText(LogTravelActivity.this, "Invalid end date. Use MM/DD/YYYY format.",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Trigger ViewModel method to handle data logging
             logTravelViewModel.logTravelData(travelLocation, estimatedStart, estimatedEnd);
             Toast.makeText(LogTravelActivity.this, "Travel data logged successfully",
@@ -65,6 +86,12 @@ public class LogTravelActivity extends AppCompatActivity {
             travelLocationInput.setText("");
             estimatedStartInput.setText("");
             estimatedEndInput.setText("");
+
+            finish();
         });
+    }
+
+    private boolean isValidDate(String date) {
+        return DATE_PATTERN.matcher(date).matches();
     }
 }

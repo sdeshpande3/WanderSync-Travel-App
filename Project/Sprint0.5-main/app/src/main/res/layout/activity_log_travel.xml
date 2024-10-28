@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".activities.view.LogTravelActivity">
 
     <data>
         <variable
@@ -12,17 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-
-        <Button
-            android:id="@+id/logTravelButton"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Log Travel"
-            android:layout_gravity="center_horizontal"
-            android:padding="12dp"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
-
         <!-- Travel Location Input Field -->
         <TextView
             android:layout_width="wrap_content"
