@@ -35,7 +35,7 @@ public class LogInActivity extends AppCompatActivity {
             return;
         }
 
-        // Reference to input fields and buttons
+        // Reference to input fields and buttons we will later check if they are null or not
         EditText usernameInput = findViewById(R.id.username_input);
         EditText passwordInput = findViewById(R.id.password_input);
         Button loginButton = findViewById(R.id.login_button);
@@ -48,7 +48,7 @@ public class LogInActivity extends AppCompatActivity {
             finish();
         });
 
-        // Set the onClickListener for the Login button
+        // Set the onClickListener for the Login button so we can trigger event when clicked
         loginButton.setOnClickListener(v -> {
             String username = usernameInput.getText().toString().trim();
             String password = passwordInput.getText().toString().trim();
