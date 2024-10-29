@@ -2,43 +2,32 @@ package com.example.sprintproject.fragments.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.sprintproject.R;
 import com.example.sprintproject.activities.view.LogTravelActivity;
 import com.example.sprintproject.activities.view.VacationTimeActivity;
+import com.example.sprintproject.model.DateDifferenceCalculator;
+import com.example.sprintproject.model.DestinationDatabase;
+
+import java.util.ArrayList;
 
 public class DestinationFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
-
-    public DestinationFragment() {
-        // Required empty public constructor
-    }
-
-    public static DestinationFragment newInstance(String param1, String param2) {
-        DestinationFragment fragment = new DestinationFragment();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_destination, container, false);
 
@@ -55,6 +44,74 @@ public class DestinationFragment extends Fragment {
             startActivity(intent);
         });
 
+        final Observer<ArrayList<DestinationDatabase.TravelLog>> travelLogObserver = new Observer<ArrayList<DestinationDatabase.TravelLog>>() {
+            @Override
+            public void onChanged(ArrayList<DestinationDatabase.TravelLog> logs) {
+                displayTravelLogs(logs);
+            }
+        };
+
+        DestinationDatabase.getInstance().getTravelLogs().observe(getViewLifecycleOwner(), travelLogObserver);
+
         return view;
+    }
+
+    private void displayTravelLogs(ArrayList<DestinationDatabase.TravelLog> logs) {
+        if (getView() == null) {
+            return;
+        }
+
+        LinearLayout travelLogContainer = getView().findViewById(R.id.layoutTravelLogs);
+        travelLogContainer.removeAllViews();
+
+        for (DestinationDatabase.TravelLog log : logs) {
+            LinearLayout row = createRow(
+                    log.location,
+                    DateDifferenceCalculator.calculateDifference(log.startDate, log.endDate)
+            );
+
+            travelLogContainer.addView(row);
+            travelLogContainer.addView(createDivider());
+        }
+    }
+
+    private LinearLayout createRow(String destination, int daysPlanned) {
+        LinearLayout row = new LinearLayout(getContext());
+        row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(0, 16, 0, 16); // Add padding for spacing
+
+        // Create Destination TextView
+        TextView destinationTextView = new TextView(getContext());
+        destinationTextView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+        destinationTextView.setText(destination);
+        destinationTextView.setTextSize(16);
+        destinationTextView.setGravity(Gravity.START);
+        destinationTextView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+        destinationTextView.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        // Create Days Planned TextView
+        TextView daysPlannedTextView = new TextView(getContext());
+        daysPlannedTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        daysPlannedTextView.setText(daysPlanned + " days planned");
+        daysPlannedTextView.setTextSize(14);
+        daysPlannedTextView.setGravity(Gravity.END);
+        daysPlannedTextView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
+
+        // Add both TextViews to the row
+        row.addView(destinationTextView);
+        row.addView(daysPlannedTextView);
+
+        return row;
+    }
+
+    private View createDivider() {
+        View divider = new View(getContext());
+
+        divider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
+
+        divider.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
+
+        return divider;
     }
 }

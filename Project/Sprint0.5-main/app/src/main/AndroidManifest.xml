@@ -32,7 +32,9 @@
         <activity
                 android:name=".activities.view.LogTravelActivity"
                 android:exported="false" />
-        <activity android:name=".activities.view.VacationTimeActivity" android:exported="false"/>
+        <activity
+                android:name=".activities.view.VacationTimeActivity"
+                android:exported="false" />
     </application>
 
 </manifest>

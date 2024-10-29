@@ -3,49 +3,52 @@ package com.example.sprintproject.activities.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.sprintproject.model.DestinationDatabase;
+
+import java.util.regex.Pattern;
 
 public class LogTravelViewModel extends ViewModel {
+    private static final Pattern DATE_PATTERN =
+            Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
 
     // LiveData properties for data binding
     public MutableLiveData<String> travelLocation = new MutableLiveData<>("");
     public MutableLiveData<String> estimatedStart = new MutableLiveData<>("");
     public MutableLiveData<String> estimatedEnd = new MutableLiveData<>("");
 
-    // List to store travel logs temporarily
-    private List<TravelLog> travelLogs = new ArrayList<>();
-
     // Method to log travel data
-    public void logTravelData(String location, String start, String end) {
-        // Validate inputs
-        if (location == null || location.isEmpty() || start == null || start.isEmpty() || end == null || end.isEmpty()) {
-            throw new IllegalArgumentException("All fields must be filled.");
+    public void logTravelData() {
+        String travelLocation = this.travelLocation.getValue().trim();
+        String estimatedStart = this.estimatedStart.getValue().trim();
+        String estimatedEnd = this.estimatedEnd.getValue().trim();
+
+        // Input validation
+        if (travelLocation.isEmpty()) {
+            throw new IllegalArgumentException("Please enter a travel location");
         }
 
-        // Create a new TravelLog object and add it to the list
-        TravelLog newLog = new TravelLog(location, start, end);
-        travelLogs.add(newLog);
+        if (estimatedStart.isEmpty()) {
+            throw new IllegalArgumentException("Please enter an estimated start date");
+        }
 
-        // Print the travel log to the console (simulating saving)
-        System.out.println("Travel logged: Location - " + location + ", Start - " + start + ", End - " + end);
+        if (estimatedEnd.isEmpty()) {
+            throw new IllegalArgumentException("Please enter an estimated end date");
+        }
 
-        // Clear LiveData fields after logging
-        travelLocation.setValue("");
-        estimatedStart.setValue("");
-        estimatedEnd.setValue("");
+        if (!isValidDate(estimatedStart)) {
+            throw new IllegalArgumentException("Invalid start date. Use MM/DD/YYYY format.");
+        }
+
+        if (!isValidDate(estimatedEnd)) {
+            throw new IllegalArgumentException("Invalid end date. Use MM/DD/YYYY format.");
+        }
+
+        // Update DB
+        DestinationDatabase.TravelLog travelLog = new DestinationDatabase.TravelLog(travelLocation, estimatedStart, estimatedEnd);
+        DestinationDatabase.getInstance().addTravelLog(travelLog);
     }
 
-    // Simple inner class to represent a travel log
-    private static class TravelLog {
-        String location;
-        String start;
-        String end;
-
-        TravelLog(String location, String start, String end) {
-            this.location = location;
-            this.start = start;
-            this.end = end;
-        }
+    private boolean isValidDate(String date) {
+        return DATE_PATTERN.matcher(date).matches();
     }
 }

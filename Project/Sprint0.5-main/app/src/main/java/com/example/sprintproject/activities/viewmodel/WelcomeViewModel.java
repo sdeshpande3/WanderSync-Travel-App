@@ -7,19 +7,16 @@ import com.example.sprintproject.model.Authentication;
 import com.google.firebase.auth.FirebaseUser;
 
 public class WelcomeViewModel extends ViewModel {
-    private final Authentication authenticationModel;
-
     public WelcomeViewModel() {
-        this.authenticationModel = new Authentication();
     }
 
     public boolean userIsLoggedIn() {
-        MutableLiveData<FirebaseUser> userLiveData = this.authenticationModel.getUserLiveData();
+        MutableLiveData<FirebaseUser> userLiveData = Authentication.getInstance().getUserLiveData();
 
         return userLiveData != null && userLiveData.getValue() != null;
     }
 
     public void signOut() {
-        this.authenticationModel.logout();
+        Authentication.getInstance().logout();
     }
 }

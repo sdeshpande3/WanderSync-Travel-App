@@ -7,18 +7,15 @@ import com.example.sprintproject.model.Authentication;
 import com.google.firebase.auth.FirebaseUser;
 // we are brought here when we need to log in
 public class LogInViewModel extends ViewModel {
-    private final Authentication authenticationModel;
-
     public LogInViewModel() {
-        this.authenticationModel = new Authentication();
     }
 
     public void login(String username, String password, Authentication.AuthCallback callback) {
-        this.authenticationModel.login(username, password, callback);
+        Authentication.getInstance().login(username, password, callback);
     }
 
     public boolean userIsLoggedIn() {
-        MutableLiveData<FirebaseUser> userLiveData = this.authenticationModel.getUserLiveData();
+        MutableLiveData<FirebaseUser> userLiveData = Authentication.getInstance().getUserLiveData();
 
         return userLiveData != null && userLiveData.getValue() != null;
     }
