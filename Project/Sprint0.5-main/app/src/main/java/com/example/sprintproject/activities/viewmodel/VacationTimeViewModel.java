@@ -7,13 +7,26 @@ import androidx.lifecycle.ViewModel;
 import com.example.sprintproject.model.UserDatabase;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VacationTimeViewModel extends ViewModel {
     public MutableLiveData<String> startDate = new MutableLiveData<>("");
     public MutableLiveData<String> endDate = new MutableLiveData<>("");
     public MutableLiveData<String> duration = new MutableLiveData<>("");
+
+    public VacationTimeViewModel() {
+        UserDatabase instance = UserDatabase.getInstance();
+
+        instance.getVacationSettings().observeForever((settings) -> {
+            startDate.setValue(settings.get("start"));
+            endDate.setValue(settings.get("end"));
+            duration.setValue(settings.get("duration"));
+        });
+    }
 
     public void calculateFieldsIfNeeded() {
         if (startDate.getValue() != null && endDate.getValue() != null && (duration.getValue() == null || duration.getValue().isEmpty())) {
@@ -25,8 +38,10 @@ public class VacationTimeViewModel extends ViewModel {
 
     private void calculateDuration() {
         try {
-            LocalDate start = LocalDate.parse(startDate.getValue());
-            LocalDate end = LocalDate.parse(endDate.getValue());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+            LocalDate start = LocalDate.parse(startDate.getValue(), formatter);
+            LocalDate end = LocalDate.parse(endDate.getValue(), formatter);
             int calculatedDuration = (int) ChronoUnit.DAYS.between(start, end);
             duration.setValue(String.valueOf(calculatedDuration));
         } catch (DateTimeParseException e) {
@@ -36,10 +51,12 @@ public class VacationTimeViewModel extends ViewModel {
 
     private void calculateEndDate() {
         try {
-            LocalDate start = LocalDate.parse(startDate.getValue());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+            LocalDate start = LocalDate.parse(startDate.getValue(), formatter);
             int days = Integer.parseInt(duration.getValue());
             LocalDate calculatedEndDate = start.plusDays(days);
-            endDate.setValue(calculatedEndDate.toString());
+            endDate.setValue(calculatedEndDate.format(formatter));
         } catch (DateTimeParseException | NumberFormatException e) {
             throw new IllegalArgumentException("Invalid date or duration");
         }
@@ -54,6 +71,18 @@ public class VacationTimeViewModel extends ViewModel {
             throw new IllegalArgumentException("All fields must be filled.");
         }
 
-        UserDatabase.getInstance().saveVacationData(start, end, dur);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        try {
+            LocalDate.parse(start, formatter);
+            LocalDate.parse(end, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format.");
+        }
+
+        Map<String, String> settings = new HashMap<>();
+        settings.put("start", start);
+        settings.put("end", end);
+
+        UserDatabase.getInstance().setVacationSetting(settings);
     }
 }

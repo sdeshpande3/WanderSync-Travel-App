@@ -24,13 +24,24 @@ public class VacationTimeActivity extends AppCompatActivity {
         binding.setViewModel(vacationTimeViewModel);
         binding.setLifecycleOwner(this);
 
+        Button calculateButton = findViewById(R.id.calculateButton);
         Button saveButton = findViewById(R.id.saveButton);
+
+        calculateButton.setOnClickListener(v -> {
+            try {
+                vacationTimeViewModel.calculateFieldsIfNeeded();
+            } catch (Exception e) {
+                Toast.makeText(VacationTimeActivity.this, "Error calculating fields: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Set the onClickListener for the Save button
         saveButton.setOnClickListener(v -> {
             try {
+                vacationTimeViewModel.calculateFieldsIfNeeded();
                 vacationTimeViewModel.saveVacationData();
                 Toast.makeText(VacationTimeActivity.this, "Vacation data saved successfully", Toast.LENGTH_SHORT).show();
+                finish();
             } catch (Exception e) {
                 Toast.makeText(VacationTimeActivity.this, "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }

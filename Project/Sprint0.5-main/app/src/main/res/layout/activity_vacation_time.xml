@@ -5,49 +5,56 @@
         tools:context=".activities.view.VacationTimeActivity">
 
     <data>
+
         <variable
-            name="viewModel"
-            type="com.example.sprintproject.activities.viewmodel.VacationTimeViewModel" />
+                name="viewModel"
+                type="com.example.sprintproject.activities.viewmodel.VacationTimeViewModel" />
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="Set Vacation Time" />
 
         <EditText
-            android:id="@+id/startDateInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter start date"
-            android:text="@={viewModel.startDate}" />
+                android:id="@+id/startDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter start date"
+                android:text="@={viewModel.startDate}" />
 
         <EditText
-            android:id="@+id/endDateInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter end date"
-            android:text="@={viewModel.endDate}" />
+                android:id="@+id/endDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter end date"
+                android:text="@={viewModel.endDate}" />
 
         <EditText
-            android:id="@+id/durationInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter duration"
-            android:text="@={viewModel.duration}" />
+                android:id="@+id/durationInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter duration"
+                android:text="@={viewModel.duration}" />
 
         <Button
-            android:id="@+id/calculateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calculate" />
+                android:id="@+id/calculateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calculate" />
 
         <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save Vacation Time" />
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Vacation Time" />
 
     </LinearLayout>
 </layout>
