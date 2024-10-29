@@ -55,7 +55,16 @@ public class DestinationDatabase {
                     }
                 } else {
                     Map<String, Object> data = new HashMap<>();
-                    data.put("travelLogs", new ArrayList<>());
+
+                    ArrayList<TravelLog> sampleTravelLogs = new ArrayList<>();
+                    TravelLog sample1 = new TravelLog("Sample 1", "12/22/2024", "12/24/2024");
+                    TravelLog sample2 = new TravelLog("Sample 2", "12/25/2024", "12/27/2024");
+
+                    sampleTravelLogs.add(sample1);
+                    sampleTravelLogs.add(sample2);
+
+                    data.put("travelLogs", sampleTravelLogs);
+
                     collectionRef.set(data).addOnSuccessListener(f -> {
                         Log.d("DestinationDatabase", "Created destination collection");
                     }).addOnFailureListener(f -> {
