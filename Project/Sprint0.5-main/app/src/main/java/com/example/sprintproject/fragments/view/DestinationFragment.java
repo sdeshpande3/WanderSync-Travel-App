@@ -15,10 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
 import com.example.sprintproject.activities.view.LogTravelActivity;
 import com.example.sprintproject.activities.view.VacationTimeActivity;
+import com.example.sprintproject.fragments.viewmodel.DestinationViewModel;
 import com.example.sprintproject.model.DateDifferenceCalculator;
 import com.example.sprintproject.model.DestinationDatabase;
 
@@ -30,6 +32,8 @@ public class DestinationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_destination, container, false);
+
+        DestinationViewModel viewModel = new DestinationViewModel(getViewLifecycleOwner());
 
         // Set up the Log Travel button to open LogTravelActivity
         Button logTravelButton = view.findViewById(R.id.logTravelButton);
@@ -44,14 +48,13 @@ public class DestinationFragment extends Fragment {
             startActivity(intent);
         });
 
-        final Observer<ArrayList<DestinationDatabase.TravelLog>> travelLogObserver = new Observer<ArrayList<DestinationDatabase.TravelLog>>() {
-            @Override
-            public void onChanged(ArrayList<DestinationDatabase.TravelLog> logs) {
-                displayTravelLogs(logs);
-            }
-        };
+        DestinationDatabase.getInstance().getTravelLogs().observe(getViewLifecycleOwner(), this::displayTravelLogs);
 
-        DestinationDatabase.getInstance().getTravelLogs().observe(getViewLifecycleOwner(), travelLogObserver);
+        TextView totalVacationTimeText = view.findViewById(R.id.totalVacationTime);
+
+        viewModel.getTotalVacationTime().observe(getViewLifecycleOwner(), totalVacationTime -> {
+            totalVacationTimeText.setText("Total Vacation Time: " + totalVacationTime + " days");
+        });
 
         return view;
     }

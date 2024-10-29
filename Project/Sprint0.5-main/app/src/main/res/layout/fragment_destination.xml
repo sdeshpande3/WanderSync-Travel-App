@@ -4,7 +4,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-
     <!-- Title TextView -->
     <TextView
             android:id="@+id/titleText"
@@ -39,6 +38,23 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:layout_marginTop="16dp" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:id="@+id/totalVacationTime"
+            android:text="Total Vacation Time: 0 days"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="Travel Logs:"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp" />
 
     <LinearLayout
             android:id="@+id/layoutTravelLogs"
