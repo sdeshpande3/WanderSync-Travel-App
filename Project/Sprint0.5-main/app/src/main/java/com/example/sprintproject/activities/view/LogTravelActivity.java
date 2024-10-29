@@ -19,7 +19,8 @@ public class LogTravelActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Initialize ViewModel and set up data binding
-        LogTravelViewModel logTravelViewModel = new ViewModelProvider(this).get(LogTravelViewModel.class);
+        LogTravelViewModel logTravelViewModel = new ViewModelProvider(this)
+                .get(LogTravelViewModel.class);
         binding.setViewModel(logTravelViewModel);
         binding.setLifecycleOwner(this);
 

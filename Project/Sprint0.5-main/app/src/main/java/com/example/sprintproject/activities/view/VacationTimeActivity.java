@@ -16,11 +16,13 @@ public class VacationTimeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityVacationTimeBinding binding = ActivityVacationTimeBinding.inflate(getLayoutInflater());
+        ActivityVacationTimeBinding binding = ActivityVacationTimeBinding
+                .inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Initialize ViewModel and set up data binding
-        VacationTimeViewModel vacationTimeViewModel = new ViewModelProvider(this).get(VacationTimeViewModel.class);
+        VacationTimeViewModel vacationTimeViewModel = new ViewModelProvider(this)
+                .get(VacationTimeViewModel.class);
         binding.setViewModel(vacationTimeViewModel);
         binding.setLifecycleOwner(this);
 
@@ -43,7 +45,8 @@ public class VacationTimeActivity extends AppCompatActivity {
                 Toast.makeText(VacationTimeActivity.this, "Vacation data saved successfully", Toast.LENGTH_SHORT).show();
                 finish();
             } catch (Exception e) {
-                Toast.makeText(VacationTimeActivity.this, "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VacationTimeActivity.this,
+                        "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

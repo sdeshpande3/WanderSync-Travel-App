@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new LogisticsFragment());
 
         /**
-         * Bottom navigation bar
+         * Bottom navigation bar this is the one at the very bottom
          */
         binding.bottomNavigationView.setOnItemSelectedListener(clicked -> {
             /* Need to fix to use gaurd clauses*/
