@@ -4,13 +4,18 @@ class Item {
     private int quantity;
     private DiscountType discountType;
     private double discountAmount;
+    private DiscountStrategy discountStrategy;
 
-    public Item(String name, double price, int quantity, DiscountType discountType, double discountAmount) {
+    public Item(String name, double price, int quantity, DiscountType discountType, double discountAmount, DiscountStrategy discountStrategy) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.discountType = discountType;
         this.discountAmount = discountAmount;
+        this.discountStrategy = discountStrategy;
+    }
+    public double getPriceWithDiscount() {
+        return discountStrategy.applyDiscount(price);
     }
 
     public String getName() {
