@@ -33,14 +33,29 @@ public class Order {
                 total += tax;
             }
         }
-    	if (hasGiftCard()) {
-        	total -= 10.0; // subtract $10 for gift card
-    	}
-    	if (total > 100.0) {
-        	total *= 0.9; // apply 10% discount for orders over $100
-    	}
-    	return total;
+
+        total = reduceGiftCardPrice(total);
+    	total = reduceDiscount(total);
+        return total;
+
     }
+
+    public double reduceGiftCardPrice(double total) {
+        if (hasGiftCard()) {
+            total -= 10.0; // subtract $10 for gift card
+        }
+        return total;
+    }
+
+    public double reduceDiscount(double total) {
+        if (total > 100.0) {
+            total *= 0.9; // apply 10% discount for orders over $100
+        }
+        return total;
+    }
+
+
+
 
     public void sendConfirmationEmail() {
         String message = "Thank you for your order, " + customerName + "!\n\n" +
