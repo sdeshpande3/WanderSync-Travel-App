@@ -8,11 +8,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class UserDatabase {
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -34,13 +31,14 @@ public class UserDatabase {
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    Map<String, Object> settings = (Map<String, Object>) snapshot.get("vacationSettings");
+                    Map<String, Object> settings =
+                            (Map<String, Object>) snapshot.get("vacationSettings");
 
                     if (settings != null) {
                         Map<String, String> newSettings = new HashMap<>();
 
                         settings.forEach((key, value) -> {
-                           newSettings.put(key, (String) value);
+                            newSettings.put(key, (String) value);
                         });
 
                         vacationSettings.postValue(newSettings);

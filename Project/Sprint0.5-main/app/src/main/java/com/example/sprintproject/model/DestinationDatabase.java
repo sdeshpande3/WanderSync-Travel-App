@@ -20,7 +20,8 @@ public class DestinationDatabase {
     private static DestinationDatabase instance;
 
     // Every piece of data that belongs to the user
-    private final MutableLiveData<ArrayList<TravelLog>> travelLogs = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<TravelLog>> travelLogs =
+            new MutableLiveData<>(new ArrayList<>());
 
     private DestinationDatabase() {
         MutableLiveData<FirebaseUser> user = Authentication.getInstance().getUserLiveData();
@@ -34,7 +35,8 @@ public class DestinationDatabase {
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    List<Map<String, Object>> logs = (List<Map<String, Object>>) snapshot.get("travelLogs");
+                    List<Map<String, Object>> logs =
+                            (List<Map<String, Object>>) snapshot.get("travelLogs");
 
                     if (logs != null) {
                         ArrayList<TravelLog> newTravelLogs = new ArrayList<>();
@@ -57,8 +59,16 @@ public class DestinationDatabase {
                     Map<String, Object> data = new HashMap<>();
 
                     ArrayList<TravelLog> sampleTravelLogs = new ArrayList<>();
-                    TravelLog sample1 = new TravelLog("Sample 1", "12/22/2024", "12/24/2024");
-                    TravelLog sample2 = new TravelLog("Sample 2", "12/25/2024", "12/27/2024");
+                    TravelLog sample1 = new TravelLog(
+                            "Sample 1",
+                            "12/22/2024",
+                            "12/24/2024"
+                    );
+                    TravelLog sample2 = new TravelLog(
+                            "Sample 2",
+                            "12/25/2024",
+                            "12/27/2024"
+                    );
 
                     sampleTravelLogs.add(sample1);
                     sampleTravelLogs.add(sample2);
@@ -107,9 +117,9 @@ public class DestinationDatabase {
         }
 
         Map<String, Object> logMap = new HashMap<>();
-        logMap.put("location", travelLog.location);
-        logMap.put("startDate", travelLog.startDate);
-        logMap.put("endDate", travelLog.endDate);
+        logMap.put("location", travelLog.getLocation());
+        logMap.put("startDate", travelLog.getStartDate());
+        logMap.put("endDate", travelLog.getEndDate());
         logs.add(logMap);
 
         collectionRef.update("travelLogs", logs).addOnSuccessListener(e -> {
@@ -120,14 +130,26 @@ public class DestinationDatabase {
     }
 
     public static class TravelLog {
-        public String location;
-        public String startDate;
-        public String endDate;
+        private String location;
+        private String startDate;
+        private String endDate;
 
         public TravelLog(String location, String startDate, String endDate) {
             this.location = location;
             this.startDate = startDate;
             this.endDate = endDate;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
         }
     }
 }

@@ -77,7 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
             signUpViewModel.signUp(email, password, new Authentication.AuthCallback() {
                 @Override
                 public void onSuccess() {
-                    // On successful sign up, save the user information to Firebase Realtime Database
                     FirebaseUser currentUser = mAuth.getCurrentUser();
                     if (currentUser != null) {
                         String userID = currentUser.getUid();
@@ -89,22 +88,25 @@ public class SignUpActivity extends AppCompatActivity {
                         // Save the user's details under their UID
                         usersRef.child(userID).setValue(userMap).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                // Successfully added the user to the database, navigate to MainActivity
                                 Toast.makeText(SignUpActivity.this,
-                                        "Account created successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                        "Account created successfully!",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(
+                                        SignUpActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
                                 // Failed to add user details to the database
                                 Toast.makeText(SignUpActivity.this,
-                                        "Failed to save user data: " + task.getException().getMessage(),
+                                        "Failed to save user data: "
+                                                + task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
                         Toast.makeText(SignUpActivity.this,
-                                "Failed to get user information after sign up", Toast.LENGTH_SHORT).show();
+                                "Failed to get user information after sign up",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
 
