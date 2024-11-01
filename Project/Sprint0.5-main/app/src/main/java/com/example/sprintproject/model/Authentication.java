@@ -38,7 +38,11 @@ public class Authentication {
             } else {
                 userLiveData.postValue(null);
 
-                String errorMessage = (task.getException() != null ? task.getException().getMessage() : "Unknown error");
+                String errorMessage = (
+                        task.getException() != null
+                                ? task.getException().getMessage()
+                                : "Unknown error"
+                );
                 callback.onFailure(errorMessage);
             }
         });
@@ -57,18 +61,22 @@ public class Authentication {
      * @param callback Callback to handle success or failure
      */
     public void register(String username, String password, AuthCallback callback) {
-        firebaseAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                userLiveData.postValue(firebaseAuth.getCurrentUser());
-                callback.onSuccess();
-            } else {
-                userLiveData.postValue(null);
+        firebaseAuth
+                .createUserWithEmailAndPassword(username, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        userLiveData.postValue(firebaseAuth.getCurrentUser());
+                        callback.onSuccess();
+                    } else {
+                        userLiveData.postValue(null);
 
-                String errorMessage;
-                errorMessage = (task.getException() != null) ? task.getException().getMessage() : "Unknown error";
-                callback.onFailure(errorMessage);
-            }
-        });
+                        String errorMessage;
+                        errorMessage = (task.getException() != null)
+                                ? task.getException().getMessage()
+                                : "Unknown error";
+                        callback.onFailure(errorMessage);
+                    }
+                });
     }
 
     public MutableLiveData<FirebaseUser> getUserLiveData() {
