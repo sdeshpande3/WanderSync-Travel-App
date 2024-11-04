@@ -22,5 +22,7 @@ Sammit Deshpande - Long method
 
 I identified a long method issue in the sendConfirmationEmail() function, where the logic for constructing the email message and sending it was overly complex and combined multiple responsibilities. This made it harder to read and maintain, as the method had to handle both the creation of the message and the email-sending functionality. To address this, I removed the construction logic into a new method called createOrderMessage(). This separation improves the overall readability of the code, making it easier to understand and maintain while improving the clarity of each method’s responsibility. By breaking the long method into smaller, more focused methods, it will have better organization and maintainability.
 
+
 Tucker Ritti - Magic Numbers
+
 I identified and removed magic numbers from the Order class to enhance clarity and maintainability. I replaced the value 10.0, which represented the gift card discount, with a constant GIFT_CARD_DISCOUNT. This change was made in the reduceGiftCardPrice and applyGiftCardDiscount methods. By using a constant, the code becomes more self-explanatory, and any adjustments to the discount value can be made in one place, reducing errors and improving overall readability.
