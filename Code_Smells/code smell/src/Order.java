@@ -26,7 +26,28 @@ public class Order {
                 total += calculateTax((TaxableItem) item);
             }
         }
+
         return total;
+
+        total = reduceGiftCardPrice(total);
+    	total = reduceDiscount(total);
+        return total;
+
+    }
+
+    public double reduceGiftCardPrice(double total) {
+        if (hasGiftCard()) {
+            total -= 10.0; // subtract $10 for gift card
+        }
+        return total;
+    }
+
+    public double reduceDiscount(double total) {
+        if (total > 100.0) {
+            total *= 0.9; // apply 10% discount for orders over $100
+        }
+        return total;
+
     }
 
     private double calculateTax(TaxableItem item) {
@@ -46,6 +67,9 @@ public class Order {
         }
         return total;
     }
+
+
+
 
 
     public void sendConfirmationEmail() {
@@ -106,13 +130,18 @@ public class Order {
             }
         }
         return has_gift_card;
-    }
+    }   
 
     public void printOrder() {
         System.out.println("Order Details:");
         for (Item item : items) {
             System.out.println(item.getName() + " - " + item.getPrice());
         }
+
+    //orderprinter class
+   public void printOrderDetails() {
+        public OrderPrinter printer = new OrderPrinter();
+        printer.printOrder(items);
     }
 
     public void addItemsFromAnotherOrder(Order otherOrder) {
