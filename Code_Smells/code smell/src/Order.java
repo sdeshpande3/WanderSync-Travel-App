@@ -12,26 +12,18 @@ public class Order {
     }
 
     public double calculateTotalPrice() {
-    	double total = 0.0;
-    	for (Item item : items) {
-        	double price = item.getPrice();
-        	switch (item.getDiscountType()) {
-            	case PERCENTAGE:
-                	price -= item.getDiscountAmount() * price;
-                	break;
-            	case AMOUNT:
-                	price -= item.getDiscountAmount();
-                	break;
-            	default:
-                	// no discount
-                	break;
-        	}
-        	total += price * item.getQuantity();
-       	    if (item instanceof TaxableItem) {
-                TaxableItem taxableItem = (TaxableItem) item;
-                double tax = taxableItem.getTaxRate() / 100.0 * item.getPrice();
-                total += tax;
-            }
+    double total = calculateItemTotal();
+    total = applyGiftCardDiscount(total);
+    total = applyLargeOrderDiscount(total);
+    return total;
+}
+
+private double calculateItemTotal() {
+    double total = 0.0;
+    for (Item item : items) {
+        total += item.getPriceWithDiscount() * item.getQuantity();
+        if (item instanceof TaxableItem) {
+            total += calculateTax((TaxableItem) item);
         }
 
         total = reduceGiftCardPrice(total);
@@ -52,7 +44,29 @@ public class Order {
             total *= 0.9; // apply 10% discount for orders over $100
         }
         return total;
+
     }
+    return total;
+}
+
+private double calculateTax(TaxableItem item) {
+    return item.getTaxRate() / 100.0 * item.getPrice();
+}
+
+private double applyGiftCardDiscount(double total) {
+    if (hasGiftCard()) {
+        total -= 10.0; // replace with a constant if preferred
+    }
+    return total;
+}
+
+private double applyLargeOrderDiscount(double total) {
+    if (total > 100.0) { // replace with a constant if preferred
+        total *= 0.9; // apply 10% discount for orders over $100
+    }
+    return total;
+}
+
 
 
 

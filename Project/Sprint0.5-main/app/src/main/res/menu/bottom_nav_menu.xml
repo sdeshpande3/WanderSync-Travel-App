@@ -2,7 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Six Options, used reference from Video on YouTube referenced on activity_main.xml -->
+    <!-- Six Option, used reference from Video on YouTube referenced on activity_main.xml -->
     <item
         android:id="@+id/logistics"
         android:title="Logistics"
