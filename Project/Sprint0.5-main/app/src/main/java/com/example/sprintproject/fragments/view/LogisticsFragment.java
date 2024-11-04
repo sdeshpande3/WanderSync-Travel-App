@@ -150,7 +150,7 @@ public class LogisticsFragment extends Fragment {
         builder.show();
     }
 
-    private void appendNoteToDatabase(String newNote) {
+    public void appendNoteToDatabase(String newNote) {
         if (currentTripID == null) {
             Log.e(TAG, "Trip ID is null.");
             Toast.makeText(
@@ -185,6 +185,7 @@ public class LogisticsFragment extends Fragment {
                     } else {
                         updatedNotes = newNote;
                     }
+
                 } else {
                     // If no note exists, initialize with the new note
                     updatedNotes = newNote;
@@ -216,6 +217,7 @@ public class LogisticsFragment extends Fragment {
                 Log.e(TAG, "Failed to load note: " + error.getMessage());
             }
         });
+
     }
 
     private void loadUserTrip() {
@@ -662,5 +664,12 @@ public class LogisticsFragment extends Fragment {
                 Log.e(TAG, "Failed to load notes: " + error.getMessage());
             }
         });
+    }
+    public boolean validateNoteInput(String note) {
+        return note != null && !note.trim().isEmpty();
+    }
+
+    public boolean validateTripId(String tripId) {
+        return tripId != null && !tripId.trim().isEmpty();
     }
 }
