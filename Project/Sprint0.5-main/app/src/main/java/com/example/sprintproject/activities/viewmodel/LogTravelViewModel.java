@@ -12,9 +12,21 @@ public class LogTravelViewModel extends ViewModel {
             Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
 
     // LiveData properties for data binding
-    public MutableLiveData<String> travelLocation = new MutableLiveData<>("");
-    public MutableLiveData<String> estimatedStart = new MutableLiveData<>("");
-    public MutableLiveData<String> estimatedEnd = new MutableLiveData<>("");
+    private MutableLiveData<String> travelLocation = new MutableLiveData<>("");
+    private MutableLiveData<String> estimatedStart = new MutableLiveData<>("");
+    private MutableLiveData<String> estimatedEnd = new MutableLiveData<>("");
+
+    public MutableLiveData<String> getTravelLocation() {
+        return travelLocation;
+    }
+
+    public MutableLiveData<String> getEstimatedStart() {
+        return estimatedStart;
+    }
+
+    public MutableLiveData<String> getEstimatedEnd() {
+        return estimatedEnd;
+    }
 
     // Method to log travel data
     public void logTravelData() {
@@ -44,7 +56,8 @@ public class LogTravelViewModel extends ViewModel {
         }
 
         // Update DB
-        DestinationDatabase.TravelLog travelLog = new DestinationDatabase.TravelLog(travelLocation, estimatedStart, estimatedEnd);
+        DestinationDatabase.TravelLog travelLog =
+                new DestinationDatabase.TravelLog(travelLocation, estimatedStart, estimatedEnd);
         DestinationDatabase.getInstance().addTravelLog(travelLog);
     }
 

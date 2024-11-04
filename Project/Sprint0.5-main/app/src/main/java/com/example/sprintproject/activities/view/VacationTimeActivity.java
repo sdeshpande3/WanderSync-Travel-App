@@ -33,7 +33,9 @@ public class VacationTimeActivity extends AppCompatActivity {
             try {
                 vacationTimeViewModel.calculateFieldsIfNeeded();
             } catch (Exception e) {
-                Toast.makeText(VacationTimeActivity.this, "Error calculating fields: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VacationTimeActivity.this,
+                        "Error calculating fields: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -42,7 +44,9 @@ public class VacationTimeActivity extends AppCompatActivity {
             try {
                 vacationTimeViewModel.calculateFieldsIfNeeded();
                 vacationTimeViewModel.saveVacationData();
-                Toast.makeText(VacationTimeActivity.this, "Vacation data saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        VacationTimeActivity.this,
+                        "Vacation data saved successfully", Toast.LENGTH_SHORT).show();
                 finish();
             } catch (Exception e) {
                 Toast.makeText(VacationTimeActivity.this,

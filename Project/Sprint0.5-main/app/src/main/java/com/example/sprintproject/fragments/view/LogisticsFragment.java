@@ -30,7 +30,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
-
 public class LogisticsFragment extends Fragment {
 
     private DatabaseReference databaseRef;
@@ -38,8 +37,11 @@ public class LogisticsFragment extends Fragment {
     private String currentUserID;
     private String currentUserEmail;
     private String currentTripID;
-    private ListView contributorsListView, notesListView;
-    private Button inviteButton, addTripButton, addNoteButton;
+    private ListView contributorsListView;
+    private ListView notesListView;
+    private Button inviteButton;
+    private Button addTripButton;
+    private Button addNoteButton;
     private EditText noteEditText;
 
 
@@ -78,15 +80,26 @@ public class LogisticsFragment extends Fragment {
                             // Proceed to load the user's trip
                             loadUserTrip();
                         } else {
-                            Toast.makeText(getContext(), "Email not found for the current user.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    getContext(),
+                                    "Email not found for the current user.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
                             Log.e(TAG, "Email not found for the current user in database.");
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getContext(), "Failed to retrieve email from database.", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Failed to retrieve email from database: " + error.getMessage());
+                        Toast.makeText(
+                                getContext(),
+                                "Failed to retrieve email from database.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        Log.e(
+                                TAG,
+                                "Failed to retrieve email from database: " + error.getMessage()
+                        );
                     }
                 });
     }
@@ -110,7 +123,6 @@ public class LogisticsFragment extends Fragment {
 
         return view;
     }
-
 
 
     private void addNote() {
@@ -141,12 +153,21 @@ public class LogisticsFragment extends Fragment {
     public void appendNoteToDatabase(String newNote) {
         if (currentTripID == null) {
             Log.e(TAG, "Trip ID is null.");
-            Toast.makeText(getContext(), "No trip found for the current user.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getContext(),
+                    "No trip found for the current user.",
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
 
         // Reference the note field for the logged-in user
-        DatabaseReference noteRef = databaseRef.child("Users").child(currentUserID).child("tripID").child("note");
+        DatabaseReference noteRef =
+                databaseRef
+                        .child("Users")
+                        .child(currentUserID)
+                        .child("tripID")
+                        .child("note");
 
         // Retrieve the current note
         noteRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,10 +194,18 @@ public class LogisticsFragment extends Fragment {
                 // Update the note field with the new string
                 noteRef.setValue(updatedNotes).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Note added successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                getContext(),
+                                "Note added successfully.",
+                                Toast.LENGTH_SHORT
+                        ).show();
                         loadNotes(); // Reload notes to refresh the ListView
                     } else {
-                        Toast.makeText(getContext(), "Failed to add note.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                getContext(),
+                                "Failed to add note.",
+                                Toast.LENGTH_SHORT
+                        ).show();
                         Log.e(TAG, "Failed to update note.");
                     }
                 });
@@ -191,11 +220,7 @@ public class LogisticsFragment extends Fragment {
 
     }
 
-    // Rest of your existing methods such as inviteUser, addTrip, addContributor, loadUserTrip, loadContributors, and loadNotes...
-
-
-
-private void loadUserTrip() {
+    private void loadUserTrip() {
         // Fetch current user's tripID from Realtime Database
         DatabaseReference userRef = databaseRef.child("Users").child(currentUserID);
         userRef.child("tripID").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -206,7 +231,8 @@ private void loadUserTrip() {
                     DataSnapshot tripSnapshot = snapshot;
 
                     if (tripSnapshot.child("contributors").exists()) {
-                        String contributors = tripSnapshot.child("contributors").getValue(String.class);
+                        String contributors = tripSnapshot
+                                .child("contributors").getValue(String.class);
                         Log.d(TAG, "Contributors: " + contributors);
                     }
 
@@ -233,7 +259,11 @@ private void loadUserTrip() {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to load trip ID.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getContext(),
+                        "Failed to load trip ID.",
+                        Toast.LENGTH_SHORT
+                ).show();
                 Log.e(TAG, "Failed to load trip ID: " + error.getMessage());
             }
         });
@@ -274,10 +304,18 @@ private void loadUserTrip() {
                     tripsRef.child(currentTripID).setValue(tripMap).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // Also add the trip ID to the user's data in the Users node
-                            databaseRef.child("Users").child(currentUserID).child("tripID").setValue(currentTripID)
+                            databaseRef
+                                    .child("Users")
+                                    .child(currentUserID)
+                                    .child("tripID")
+                                    .setValue(currentTripID)
                                     .addOnCompleteListener(userTask -> {
                                         if (userTask.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Trip created successfully!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(
+                                                    getContext(),
+                                                    "Trip created successfully!",
+                                                    Toast.LENGTH_SHORT
+                                            ).show();
                                             addTripButton.setVisibility(View.GONE);
                                             inviteButton.setVisibility(View.VISIBLE);
                                             addNoteButton.setVisibility(View.VISIBLE);
@@ -286,19 +324,37 @@ private void loadUserTrip() {
                                             loadContributors();
                                             loadNotes();
                                         } else {
-                                            Toast.makeText(getContext(), "Failed to add trip ID to user: " + userTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(
+                                                    getContext(),
+                                                    "Failed to add trip ID to user: "
+                                                            + userTask.getException().getMessage(),
+                                                    Toast.LENGTH_SHORT
+                                            ).show();
                                         }
                                     });
                         } else {
-                            Toast.makeText(getContext(), "Failed to create trip: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    getContext(),
+                                    "Failed to create trip: "
+                                            + task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT
+                            ).show();
                         }
                     });
                 } else {
                     Log.e(TAG, "Failed to generate a new trip ID.");
-                    Toast.makeText(getContext(), "Failed to create trip. Please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            getContext(),
+                            "Failed to create trip. Please try again.",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             } else {
-                Toast.makeText(getContext(), "Please enter a trip name.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getContext(),
+                        "Please enter a trip name.",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
@@ -324,7 +380,11 @@ private void loadUserTrip() {
             if (!emailToInvite.isEmpty()) {
                 addContributor(emailToInvite);
             } else {
-                Toast.makeText(getContext(), "Please enter an email.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getContext(),
+                        "Please enter an email.",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
@@ -335,12 +395,20 @@ private void loadUserTrip() {
     private void addContributor(String emailToInvite) {
         if (currentTripID == null) {
             Log.e(TAG, "Trip ID is null.");
-            Toast.makeText(getContext(), "No trip found for the current user.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getContext(),
+                    "No trip found for the current user.",
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
 
         // Reference the contributors section for the logged-in user
-        DatabaseReference contributorsRef = databaseRef.child("Users").child(currentUserID).child("tripID").child("contributors");
+        DatabaseReference contributorsRef = databaseRef
+                .child("Users")
+                .child(currentUserID)
+                .child("tripID")
+                .child("contributors");
 
         // Retrieve the current contributors list
         contributorsRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -363,9 +431,17 @@ private void loadUserTrip() {
                     // Update the contributors node with the new string
                     contributorsRef.setValue(updatedContributors).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Contributor added successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    getContext(),
+                                    "Contributor added successfully.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
                         } else {
-                            Toast.makeText(getContext(), "Failed to add contributor.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    getContext(),
+                                    "Failed to add contributor.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
                             Log.e(TAG, "Failed to update contributors.");
                         }
                     });
@@ -373,9 +449,17 @@ private void loadUserTrip() {
                     // If contributors node does not exist, initialize with the new contributor
                     contributorsRef.setValue(emailToInvite).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Contributor added successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    getContext(),
+                                    "Contributor added successfully.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
                         } else {
-                            Toast.makeText(getContext(), "Failed to add contributor.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    getContext(),
+                                    "Failed to add contributor.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
                             Log.e(TAG, "Failed to update contributors.");
                         }
                     });
@@ -384,12 +468,15 @@ private void loadUserTrip() {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to load contributors.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getContext(),
+                        "Failed to load contributors.",
+                        Toast.LENGTH_SHORT
+                ).show();
                 Log.e(TAG, "Failed to load contributors: " + error.getMessage());
             }
         });
     }
-
 
 
     private void findUserByEmail(String email) {
@@ -413,7 +500,11 @@ private void loadUserTrip() {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to search for user.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getContext(),
+                        "Failed to search for user.",
+                        Toast.LENGTH_SHORT
+                ).show();
                 Log.e(TAG, "Failed to search for user by email: " + error.getMessage());
             }
         });
@@ -421,33 +512,60 @@ private void loadUserTrip() {
 
     private void addUserToTrip(String invitedUserID, String email) {
         // Add user's email to trip's users list
-        DatabaseReference tripUsersRef = databaseRef.child("trips").child(currentTripID).child("users");
+        DatabaseReference tripUsersRef =
+                databaseRef
+                        .child("trips")
+                        .child(currentTripID)
+                        .child("users");
         tripUsersRef.child(email).setValue(true);
 
         // Update invited user's tripID
         DatabaseReference invitedUserRef = databaseRef.child("Users").child(invitedUserID);
-        invitedUserRef.child("tripID").setValue(currentTripID).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "User invited successfully.", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "User " + invitedUserID + " invited successfully to trip " + currentTripID);
-                // Reload contributors to update the list
-                loadContributors();
-            } else {
-                Toast.makeText(getContext(), "Failed to invite user.", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "Failed to invite user " + invitedUserID + " to trip " + currentTripID);
-            }
-        });
+        invitedUserRef
+                .child("tripID")
+                .setValue(currentTripID)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(
+                                getContext(),
+                                "User invited successfully.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        Log.d(TAG, "User "
+                                + invitedUserID
+                                + " invited successfully to trip " + currentTripID);
+                        // Reload contributors to update the list
+                        loadContributors();
+                    } else {
+                        Toast.makeText(
+                                getContext(),
+                                "Failed to invite user.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        Log.e(TAG, "Failed to invite user "
+                                + invitedUserID + " to trip " + currentTripID);
+                    }
+                });
     }
 
     private void loadContributors() {
         if (currentTripID == null) {
             Log.e(TAG, "Trip ID is null.");
-            Toast.makeText(getContext(), "No trip found for the current user.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getContext(),
+                    "No trip found for the current user.",
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
 
         // Reference the contributors object under tripID
-        DatabaseReference contributorsRef = databaseRef.child("Users").child(currentUserID).child("tripID").child("contributors");
+        DatabaseReference contributorsRef =
+                databaseRef
+                        .child("Users")
+                        .child(currentUserID)
+                        .child("tripID")
+                        .child("contributors");
 
         contributorsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -459,21 +577,37 @@ private void loadUserTrip() {
                         contributorsList.add(contributor);
 
                         // Update the ListView with the list of contributors
-                        ArrayAdapter<String> contributorsAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, contributorsList);
+                        ArrayAdapter<String> contributorsAdapter = new ArrayAdapter<>(
+                                requireActivity(),
+                                android.R.layout.simple_list_item_1,
+                                contributorsList
+                        );
                         contributorsListView.setAdapter(contributorsAdapter);
                     } else {
                         Log.e(TAG, "Contributors field is empty for the current user's trip.");
-                        Toast.makeText(getContext(), "No contributors found for the current trip.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                getContext(),
+                                "No contributors found for the current trip.",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 } else {
                     Log.e(TAG, "Contributors node not found in tripID object.");
-                    Toast.makeText(getContext(), "Contributors information is missing for the trip.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            getContext(),
+                            "Contributors information is missing for the trip.",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to load contributors.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getContext(),
+                        "Failed to load contributors.",
+                        Toast.LENGTH_SHORT
+                ).show();
                 Log.e(TAG, "Failed to load contributors: " + error.getMessage());
             }
         });
@@ -482,12 +616,21 @@ private void loadUserTrip() {
     private void loadNotes() {
         if (currentTripID == null) {
             Log.e(TAG, "Trip ID is null.");
-            Toast.makeText(getContext(), "No trip found for the current user.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getContext(),
+                    "No trip found for the current user.",
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
 
         // Reference to the user's note field under tripID
-        DatabaseReference noteRef = databaseRef.child("Users").child(currentUserID).child("tripID").child("note");
+        DatabaseReference noteRef =
+                databaseRef
+                        .child("Users")
+                        .child(currentUserID)
+                        .child("tripID")
+                        .child("note");
 
         noteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -499,21 +642,25 @@ private void loadUserTrip() {
                         notesList.add(note);
 
                         // Update the ListView with the list of notes
-                        ArrayAdapter<String> notesAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, notesList);
+                        ArrayAdapter<String> notesAdapter = new ArrayAdapter<>(
+                                requireActivity(), android.R.layout.simple_list_item_1, notesList);
                         notesListView.setAdapter(notesAdapter);
                     } else {
                         Log.e(TAG, "Note field is empty for the current user's trip.");
-                        Toast.makeText(getContext(), "No notes found for the current trip.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "No notes found for the current trip.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e(TAG, "Note node not found in tripID object.");
-                    Toast.makeText(getContext(), "Notes information is missing for the trip.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Notes information is missing for the trip.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to load notes.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load notes.",
+                        Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "Failed to load notes: " + error.getMessage());
             }
         });

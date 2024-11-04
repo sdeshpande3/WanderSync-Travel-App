@@ -1,11 +1,11 @@
 # Sprint0.5F24
 Vasili Fovos
 
-Samarth Tewari
+Samarth Tewari - 
 
-Arav Arora
+Arav Arora 
 
-Tucker Ritti
+Tucker Ritti 
 
 Sammit Deshpande
 
