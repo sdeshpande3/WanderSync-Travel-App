@@ -31,6 +31,7 @@ public class Order {
                 total += calculateTax((TaxableItem) item);
             }
         }
+
         return total;
     }
 
@@ -50,16 +51,21 @@ public class Order {
             total *= LARGE_ORDER_DISCOUNT_RATE; // use constant for large order discount rate
         }
         return total;
-    }
 
     public void sendConfirmationEmail() {
-        String message = "Thank you for your order, " + customerName + "!\n\n" +
-                "Your order details:\n";
-        for (Item item : items) {
-            message += item.getName() + " - " + item.getPrice() + "\n";
-        }
-        message += "Total: " + calculateTotalPrice();
+        String message = createOrderMessage();
         EmailSender.sendEmail(customerEmail, "Order Confirmation", message);
+    }
+
+    private String createOrderMessage() {
+        StringBuilder message = new StringBuilder();
+        message.append("Thank you for your order, ").append(customerName).append("!\n\n")
+                .append("Your order details:\n");
+        for (Item item : items) {
+            message.append(item.getName()).append(" - ").append(item.getPrice()).append("\n");
+        }
+        message.append("Total: ").append(calculateTotalPrice());
+        return message.toString();
     }
 
     public void addItem(Item item) {
@@ -103,9 +109,9 @@ public class Order {
         return false; // no gift card found
     }
 
-    // order printer class
-    public void printOrderDetails() {
-        OrderPrinter printer = new OrderPrinter();
+    //orderprinter class
+   public void printOrderDetails() {
+        public OrderPrinter printer = new OrderPrinter();
         printer.printOrder(items);
     }
 
