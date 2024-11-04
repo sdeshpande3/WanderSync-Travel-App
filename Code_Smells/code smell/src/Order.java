@@ -109,14 +109,13 @@ public class Order {
             }
         }
         return has_gift_card;
-    }
+    }   
 
-   public void printOrder() {
-        System.out.println("Order Details:");
-        for (Item item : items) {
-            System.out.println(item.getName() + " - " + item.getPrice());
-        }
-   }
+    //orderprinter class
+   public void printOrderDetails() {
+        public OrderPrinter printer = new OrderPrinter();
+        printer.printOrder(items);
+    }
 
    public void addItemsFromAnotherOrder(Order otherOrder) {
         for (Item item : otherOrder.getItems()) {
