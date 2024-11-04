@@ -5,6 +5,11 @@ public class Order {
     private String customerName;
     private String customerEmail;
 
+    // Constants to replace magic numbers
+    private static final double GIFT_CARD_DISCOUNT = 10.0; // Amount to subtract for gift card
+    private static final double LARGE_ORDER_THRESHOLD = 100.0; // Minimum order amount for discount
+    private static final double LARGE_ORDER_DISCOUNT_RATE = 0.9; // 10% discount for large orders
+
     public Order(List<Item> items, String customerName, String customerEmail) {
         this.items = items;
         this.customerName = customerName;
@@ -28,26 +33,6 @@ public class Order {
         }
 
         return total;
-
-        total = reduceGiftCardPrice(total);
-    	total = reduceDiscount(total);
-        return total;
-
-    }
-
-    public double reduceGiftCardPrice(double total) {
-        if (hasGiftCard()) {
-            total -= 10.0; // subtract $10 for gift card
-        }
-        return total;
-    }
-
-    public double reduceDiscount(double total) {
-        if (total > 100.0) {
-            total *= 0.9; // apply 10% discount for orders over $100
-        }
-        return total;
-
     }
 
     private double calculateTax(TaxableItem item) {
@@ -56,21 +41,16 @@ public class Order {
 
     private double applyGiftCardDiscount(double total) {
         if (hasGiftCard()) {
-            total -= 10.0; // replace with a constant if preferred
+            total -= GIFT_CARD_DISCOUNT; // use constant for gift card discount
         }
         return total;
     }
 
     private double applyLargeOrderDiscount(double total) {
-        if (total > 100.0) { // replace with a constant if preferred
-            total *= 0.9; // apply 10% discount for orders over $100
+        if (total > LARGE_ORDER_THRESHOLD) { // use constant for large order threshold
+            total *= LARGE_ORDER_DISCOUNT_RATE; // use constant for large order discount rate
         }
         return total;
-    }
-
-
-
-
 
     public void sendConfirmationEmail() {
         String message = createOrderMessage();
@@ -87,7 +67,6 @@ public class Order {
         message.append("Total: ").append(calculateTotalPrice());
         return message.toString();
     }
-
 
     public void addItem(Item item) {
         items.add(item);
@@ -122,21 +101,13 @@ public class Order {
     }
 
     public boolean hasGiftCard() {
-        boolean has_gift_card = false;
         for (Item item : items) {
             if (item instanceof GiftCardItem) {
-                has_gift_card = true;
-                break;
+                return true; // return immediately upon finding a gift card
             }
         }
-        return has_gift_card;
-    }   
-
-    public void printOrder() {
-        System.out.println("Order Details:");
-        for (Item item : items) {
-            System.out.println(item.getName() + " - " + item.getPrice());
-        }
+        return false; // no gift card found
+    }
 
     //orderprinter class
    public void printOrderDetails() {
@@ -149,6 +120,4 @@ public class Order {
             items.add(item);
         }
     }
-
 }
-
