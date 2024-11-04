@@ -12,50 +12,56 @@ public class Order {
     }
 
     public double calculateTotalPrice() {
-    double total = calculateItemTotal();
-    total = applyGiftCardDiscount(total);
-    total = applyLargeOrderDiscount(total);
-    return total;
-}
+        double total = calculateItemTotal();
+        total = applyGiftCardDiscount(total);
+        total = applyLargeOrderDiscount(total);
+        return total;
+    }
 
-private double calculateItemTotal() {
-    double total = 0.0;
-    for (Item item : items) {
-        total += item.getPriceWithDiscount() * item.getQuantity();
-        if (item instanceof TaxableItem) {
-            total += calculateTax((TaxableItem) item);
+    private double calculateItemTotal() {
+        double total = 0.0;
+        for (Item item : items) {
+            total += item.getPriceWithDiscount() * item.getQuantity();
+            if (item instanceof TaxableItem) {
+                total += calculateTax((TaxableItem) item);
+            }
         }
+        return total;
     }
-    return total;
-}
 
-private double calculateTax(TaxableItem item) {
-    return item.getTaxRate() / 100.0 * item.getPrice();
-}
-
-private double applyGiftCardDiscount(double total) {
-    if (hasGiftCard()) {
-        total -= 10.0; // replace with a constant if preferred
+    private double calculateTax(TaxableItem item) {
+        return item.getTaxRate() / 100.0 * item.getPrice();
     }
-    return total;
-}
 
-private double applyLargeOrderDiscount(double total) {
-    if (total > 100.0) { // replace with a constant if preferred
-        total *= 0.9; // apply 10% discount for orders over $100
+    private double applyGiftCardDiscount(double total) {
+        if (hasGiftCard()) {
+            total -= 10.0; // replace with a constant if preferred
+        }
+        return total;
     }
-    return total;
-}
+
+    private double applyLargeOrderDiscount(double total) {
+        if (total > 100.0) { // replace with a constant if preferred
+            total *= 0.9; // apply 10% discount for orders over $100
+        }
+        return total;
+    }
 
 
     public void sendConfirmationEmail() {
-        String message = "Thank you for your order, " + customerName + "!\n\n" +
-                "Your order details:\n";
-        for (Item item : items) {
-            message += item.getName() + " - " + item.getPrice() + "\n";
-        }
-        message += "Total: " + calculateTotalPrice();
+        String message = createOrderMessage();
         EmailSender.sendEmail(customerEmail, "Order Confirmation", message);
+    }
+
+    private String createOrderMessage() {
+        StringBuilder message = new StringBuilder();
+        message.append("Thank you for your order, ").append(customerName).append("!\n\n")
+                .append("Your order details:\n");
+        for (Item item : items) {
+            message.append(item.getName()).append(" - ").append(item.getPrice()).append("\n");
+        }
+        message.append("Total: ").append(calculateTotalPrice());
+        return message.toString();
     }
 
 
@@ -102,18 +108,18 @@ private double applyLargeOrderDiscount(double total) {
         return has_gift_card;
     }
 
-   public void printOrder() {
+    public void printOrder() {
         System.out.println("Order Details:");
         for (Item item : items) {
             System.out.println(item.getName() + " - " + item.getPrice());
         }
-   }
+    }
 
-   public void addItemsFromAnotherOrder(Order otherOrder) {
+    public void addItemsFromAnotherOrder(Order otherOrder) {
         for (Item item : otherOrder.getItems()) {
             items.add(item);
         }
-   }
+    }
 
 }
 
