@@ -12,23 +12,41 @@ public class Order {
     }
 
     public double calculateTotalPrice() {
-    	double total = 0.0;
-    	for (Item item : items) {
-            total += item.getPriceWithDiscount() * item.getQuantity();
-       	    if (item instanceof TaxableItem) {
-                TaxableItem taxableItem = (TaxableItem) item;
-                double tax = taxableItem.getTaxRate() / 100.0 * item.getPrice();
-                total += tax;
-            }
+    double total = calculateItemTotal();
+    total = applyGiftCardDiscount(total);
+    total = applyLargeOrderDiscount(total);
+    return total;
+}
+
+private double calculateItemTotal() {
+    double total = 0.0;
+    for (Item item : items) {
+        total += item.getPriceWithDiscount() * item.getQuantity();
+        if (item instanceof TaxableItem) {
+            total += calculateTax((TaxableItem) item);
         }
-    	if (hasGiftCard()) {
-        	total -= 10.0; // subtract $10 for gift card
-    	}
-    	if (total > 100.0) {
-        	total *= 0.9; // apply 10% discount for orders over $100
-    	}
-    	return total;
     }
+    return total;
+}
+
+private double calculateTax(TaxableItem item) {
+    return item.getTaxRate() / 100.0 * item.getPrice();
+}
+
+private double applyGiftCardDiscount(double total) {
+    if (hasGiftCard()) {
+        total -= 10.0; // replace with a constant if preferred
+    }
+    return total;
+}
+
+private double applyLargeOrderDiscount(double total) {
+    if (total > 100.0) { // replace with a constant if preferred
+        total *= 0.9; // apply 10% discount for orders over $100
+    }
+    return total;
+}
+
 
     public void sendConfirmationEmail() {
         String message = "Thank you for your order, " + customerName + "!\n\n" +
