@@ -7,6 +7,7 @@ import com.example.sprintproject.model.DestinationDatabase;
 
 import java.util.regex.Pattern;
 
+//This is the model for user log travel
 public class LogTravelViewModel extends ViewModel {
     private static final Pattern DATE_PATTERN =
             Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");

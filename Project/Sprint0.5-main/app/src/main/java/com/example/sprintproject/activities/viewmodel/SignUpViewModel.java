@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel;
 import com.example.sprintproject.model.Authentication;
 import com.google.firebase.auth.FirebaseUser;
 
+
+//This is the view model for sign up.
 public class SignUpViewModel extends ViewModel {
     public SignUpViewModel() {
     }
