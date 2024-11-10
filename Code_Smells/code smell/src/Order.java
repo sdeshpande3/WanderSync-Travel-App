@@ -5,6 +5,11 @@ public class Order {
     private String customerName;
     private String customerEmail;
 
+    // Constants to replace magic numbers
+    private static final double GIFT_CARD_DISCOUNT = 10.0; // Amount to subtract for gift card
+    private static final double LARGE_ORDER_THRESHOLD = 100.0; // Minimum order amount for discount
+    private static final double LARGE_ORDER_DISCOUNT_RATE = 0.9; // 10% discount for large orders
+
     public Order(List<Item> items, String customerName, String customerEmail) {
         this.items = items;
         this.customerName = customerName;
@@ -12,34 +17,56 @@ public class Order {
     }
 
     public double calculateTotalPrice() {
-    	double total = 0.0;
-    	for (Item item : items) {
-            total += item.getPriceWithDiscount() * item.getQuantity();
-       	    if (item instanceof TaxableItem) {
-                TaxableItem taxableItem = (TaxableItem) item;
-                double tax = taxableItem.getTaxRate() / 100.0 * item.getPrice();
-                total += tax;
-            }
-        }
-    	if (hasGiftCard()) {
-        	total -= 10.0; // subtract $10 for gift card
-    	}
-    	if (total > 100.0) {
-        	total *= 0.9; // apply 10% discount for orders over $100
-    	}
-    	return total;
+        double total = calculateItemTotal();
+        total = applyGiftCardDiscount(total);
+        total = applyLargeOrderDiscount(total);
+        return total;
     }
 
-    public void sendConfirmationEmail() {
-        String message = "Thank you for your order, " + customerName + "!\n\n" +
-                "Your order details:\n";
+    private double calculateItemTotal() {
+        double total = 0.0;
         for (Item item : items) {
-            message += item.getName() + " - " + item.getPrice() + "\n";
+            total += item.getPriceWithDiscount() * item.getQuantity();
+            if (item instanceof TaxableItem) {
+                total += calculateTax((TaxableItem) item);
+            }
         }
-        message += "Total: " + calculateTotalPrice();
+
+        return total;
+    }
+
+    private double calculateTax(TaxableItem item) {
+        return item.getTaxRate() / 100.0 * item.getPrice();
+    }
+
+    private double applyGiftCardDiscount(double total) {
+        if (hasGiftCard()) {
+            total -= GIFT_CARD_DISCOUNT; // use constant for gift card discount
+        }
+        return total;
+    }
+
+    private double applyLargeOrderDiscount(double total) {
+        if (total > LARGE_ORDER_THRESHOLD) { // use constant for large order threshold
+            total *= LARGE_ORDER_DISCOUNT_RATE; // use constant for large order discount rate
+        }
+        return total;
+
+    public void sendConfirmationEmail() {
+        String message = createOrderMessage();
         EmailSender.sendEmail(customerEmail, "Order Confirmation", message);
     }
 
+    private String createOrderMessage() {
+        StringBuilder message = new StringBuilder();
+        message.append("Thank you for your order, ").append(customerName).append("!\n\n")
+                .append("Your order details:\n");
+        for (Item item : items) {
+            message.append(item.getName()).append(" - ").append(item.getPrice()).append("\n");
+        }
+        message.append("Total: ").append(calculateTotalPrice());
+        return message.toString();
+    }
 
     public void addItem(Item item) {
         items.add(item);
@@ -74,28 +101,23 @@ public class Order {
     }
 
     public boolean hasGiftCard() {
-        boolean has_gift_card = false;
         for (Item item : items) {
             if (item instanceof GiftCardItem) {
-                has_gift_card = true;
-                break;
+                return true; // return immediately upon finding a gift card
             }
         }
-        return has_gift_card;
+        return false; // no gift card found
     }
 
-   public void printOrder() {
-        System.out.println("Order Details:");
-        for (Item item : items) {
-            System.out.println(item.getName() + " - " + item.getPrice());
-        }
-   }
+    //orderprinter class
+   public void printOrderDetails() {
+        public OrderPrinter printer = new OrderPrinter();
+        printer.printOrder(items);
+    }
 
-   public void addItemsFromAnotherOrder(Order otherOrder) {
+    public void addItemsFromAnotherOrder(Order otherOrder) {
         for (Item item : otherOrder.getItems()) {
             items.add(item);
         }
-   }
-
+    }
 }
-

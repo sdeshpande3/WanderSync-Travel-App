@@ -1,6 +1,5 @@
 package com.example.sprintproject.model;
 
-import java.lang.Math;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;

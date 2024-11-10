@@ -1,6 +1,5 @@
 package com.example.sprintproject.activities.viewmodel;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VacationTimeViewModel extends ViewModel {
-    public MutableLiveData<String> startDate = new MutableLiveData<>("");
-    public MutableLiveData<String> endDate = new MutableLiveData<>("");
-    public MutableLiveData<String> duration = new MutableLiveData<>("");
+    private MutableLiveData<String> startDate = new MutableLiveData<>("");
+    private MutableLiveData<String> endDate = new MutableLiveData<>("");
+    private MutableLiveData<String> duration = new MutableLiveData<>("");
 
     public VacationTimeViewModel() {
         UserDatabase instance = UserDatabase.getInstance();
@@ -28,10 +27,24 @@ public class VacationTimeViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<String> getStartDate() {
+        return startDate;
+    }
+
+    public MutableLiveData<String> getEndDate() {
+        return endDate;
+    }
+
+    public MutableLiveData<String> getDuration() {
+        return duration;
+    }
+
     public void calculateFieldsIfNeeded() {
-        if (startDate.getValue() != null && endDate.getValue() != null && (duration.getValue() == null || duration.getValue().isEmpty())) {
+        if (startDate.getValue() != null && endDate.getValue() != null
+                && (duration.getValue() == null || duration.getValue().isEmpty())) {
             calculateDuration();
-        } else if (startDate.getValue() != null && duration.getValue() != null && (endDate.getValue() == null || endDate.getValue().isEmpty())) {
+        } else if (startDate.getValue() != null && duration.getValue() != null
+                && (endDate.getValue() == null || endDate.getValue().isEmpty())) {
             calculateEndDate();
         }
     }
@@ -67,7 +80,14 @@ public class VacationTimeViewModel extends ViewModel {
         String end = endDate.getValue();
         String dur = duration.getValue();
 
-        if (start == null || start.isEmpty() || end == null || end.isEmpty() || dur == null || dur.isEmpty()) {
+        if (
+                start == null
+                        || start.isEmpty()
+                        || end == null
+                        || end.isEmpty()
+                        || dur == null
+                        || dur.isEmpty()
+        ) {
             throw new IllegalArgumentException("All fields must be filled.");
         }
 

@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
 import com.example.sprintproject.activities.view.LogTravelActivity;
@@ -29,7 +25,11 @@ import java.util.ArrayList;
 public class DestinationFragment extends Fragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_destination, container, false);
 
@@ -48,7 +48,9 @@ public class DestinationFragment extends Fragment {
             startActivity(intent);
         });
 
-        DestinationDatabase.getInstance().getTravelLogs().observe(getViewLifecycleOwner(), this::displayTravelLogs);
+        DestinationDatabase
+                .getInstance()
+                .getTravelLogs().observe(getViewLifecycleOwner(), this::displayTravelLogs);
 
         TextView totalVacationTimeText = view.findViewById(R.id.totalVacationTime);
 
@@ -80,26 +82,45 @@ public class DestinationFragment extends Fragment {
 
     private LinearLayout createRow(String destination, int daysPlanned) {
         LinearLayout row = new LinearLayout(getContext());
-        row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        row.setLayoutParams(
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+        );
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setPadding(0, 16, 0, 16); // Add padding for spacing
 
         // Create Destination TextView
         TextView destinationTextView = new TextView(getContext());
-        destinationTextView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+        destinationTextView.setLayoutParams(
+                new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f
+                )
+        );
         destinationTextView.setText(destination);
         destinationTextView.setTextSize(16);
         destinationTextView.setGravity(Gravity.START);
-        destinationTextView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+        destinationTextView.setTextColor(
+                ContextCompat.getColor(getContext(), android.R.color.black)
+        );
         destinationTextView.setTypeface(null, android.graphics.Typeface.BOLD);
 
         // Create Days Planned TextView
         TextView daysPlannedTextView = new TextView(getContext());
-        daysPlannedTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        daysPlannedTextView.setLayoutParams(
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+        );
         daysPlannedTextView.setText(daysPlanned + " days planned");
         daysPlannedTextView.setTextSize(14);
         daysPlannedTextView.setGravity(Gravity.END);
-        daysPlannedTextView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
+        daysPlannedTextView.setTextColor(
+                ContextCompat.getColor(getContext(), android.R.color.darker_gray)
+        );
 
         // Add both TextViews to the row
         row.addView(destinationTextView);
@@ -111,9 +132,13 @@ public class DestinationFragment extends Fragment {
     private View createDivider() {
         View divider = new View(getContext());
 
-        divider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        divider.setLayoutParams(
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1)
+        );
 
-        divider.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
+        divider.setBackgroundColor(
+                ContextCompat.getColor(getContext(), android.R.color.darker_gray)
+        );
 
         return divider;
     }

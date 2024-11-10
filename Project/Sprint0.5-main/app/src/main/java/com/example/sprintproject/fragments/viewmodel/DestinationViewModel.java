@@ -26,7 +26,10 @@ public class DestinationViewModel extends ViewModel {
         int totalTime = 0;
 
         for (DestinationDatabase.TravelLog travelLog : travelLogList) {
-            totalTime += DateDifferenceCalculator.calculateDifference(travelLog.startDate, travelLog.endDate);
+            totalTime += DateDifferenceCalculator.calculateDifference(
+                    travelLog.getStartDate(),
+                    travelLog.getEndDate()
+            );
         }
 
         totalVacationTime.postValue(totalTime);
