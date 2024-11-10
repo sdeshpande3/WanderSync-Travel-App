@@ -35,7 +35,7 @@ public class LogInActivity extends AppCompatActivity {
             return;
         }
 
-        // Reference to input fields and buttons we will later check if they are null or not
+        // Reference to input fields and buttons we will later check if they are null or not and act accordingly
         EditText usernameInput = findViewById(R.id.username_input);
         EditText passwordInput = findViewById(R.id.password_input);
         Button loginButton = findViewById(R.id.login_button);
