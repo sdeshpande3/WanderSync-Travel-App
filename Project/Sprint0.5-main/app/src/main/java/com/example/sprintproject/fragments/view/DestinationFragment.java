@@ -71,8 +71,9 @@ public class DestinationFragment extends Fragment {
 
         for (DestinationDatabase.TravelLog log : logs) {
             LinearLayout row = createRow(
-                    log.location,
-                    DateDifferenceCalculator.calculateDifference(log.startDate, log.endDate)
+                    log.getLocation(),
+                    DateDifferenceCalculator.calculateDifference(log.getStartDate(), log.getEndDate()
+                    )
             );
 
             travelLogContainer.addView(row);
@@ -142,4 +143,6 @@ public class DestinationFragment extends Fragment {
 
         return divider;
     }
+
+
 }

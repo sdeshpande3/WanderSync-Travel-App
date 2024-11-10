@@ -13,7 +13,7 @@ import com.example.sprintproject.activities.viewmodel.MainViewModel;
 import com.example.sprintproject.databinding.ActivityMainBinding;
 import com.example.sprintproject.fragments.view.DestinationFragment;
 import com.example.sprintproject.fragments.view.LogisticsFragment;
-import com.example.sprintproject.fragments.view.AccommodationsFragment;
+import com.example.sprintproject.fragments.view.AccommodationFragment;
 import com.example.sprintproject.fragments.view.DiningFragment;
 import com.example.sprintproject.fragments.view.TravelFragment;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (clicked.getItemId() == R.id.dining) {
                 replaceFragment(new DiningFragment());
             } else if (clicked.getItemId() == R.id.accommodations) {
-                replaceFragment(new AccommodationsFragment());
+                replaceFragment(new AccommodationFragment());
             } else if (clicked.getItemId() == R.id.travel) {
                 replaceFragment(new TravelFragment());
             }

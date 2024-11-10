@@ -1,65 +1,131 @@
 package com.example.sprintproject.fragments.view;
-
+import java.util.Collections;
+import java.util.Comparator;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.widget.RatingBar;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sprintproject.R;
+import com.example.sprintproject.fragments.viewmodel.DiningViewModel;
+import com.example.sprintproject.model.DiningReservation;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DiningFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.sprintproject.model.SortByTime;
+import com.example.sprintproject.model.SortByType;
+import com.example.sprintproject.model.SortStrategy;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 public class DiningFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
+    private DiningViewModel diningViewModel;
+    private RecyclerView recyclerView;
+    private DiningAdapter adapter;
 
     public DiningFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RestaurantFragment.
-     */
-
-    public static DiningFragment newInstance(String param1, String param2) {
-        DiningFragment fragment = new DiningFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static DiningFragment newInstance() {
+        return new DiningFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_dining, container, false);
+
+        diningViewModel = new ViewModelProvider(this).get(DiningViewModel.class);
+
+        recyclerView = view.findViewById(R.id.recyclerViewReservations);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new DiningAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
+        diningViewModel.getReservations().observe(getViewLifecycleOwner(), reservations -> {
+            adapter.updateData(reservations);
+        });
+
+        // Load data from Firestore
+        diningViewModel.loadReservations();
+
+        // Sorting buttons
+        Button sortByTimeButton = view.findViewById(R.id.buttonSortByTime);
+        Button sortByTypeButton = view.findViewById(R.id.buttonSortByReview); // Using "Type" for demonstration
+
+        sortByTimeButton.setOnClickListener(v -> applySortStrategy(new SortByTime()));
+        sortByTypeButton.setOnClickListener(v -> applySortStrategy(new SortByType()));
+
+        View fab = view.findViewById(R.id.fabAddReservation);
+        fab.setOnClickListener(v -> showAddReservationDialog());
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dining, container, false);
+
+    private void showTimePickerDialog(EditText timeField) {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                (view, selectedHour, selectedMinute) -> {
+                    String formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute);
+                    timeField.setText(formattedTime);
+                }, hour, minute, true);
+
+        timePickerDialog.show();
     }
+    private void showAddReservationDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_dining_reservation, null);
+        dialog.setContentView(dialogView);
+
+        EditText locationField = dialogView.findViewById(R.id.editTextLocation);
+        EditText websiteField = dialogView.findViewById(R.id.editTextWebsite);
+        EditText reservationTimeField = dialogView.findViewById(R.id.editTextReservationTime);
+        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBarReview); // Correct ID reference
+        Button saveButton = dialogView.findViewById(R.id.buttonSaveReservation);
+
+        reservationTimeField.setOnClickListener(v -> showTimePickerDialog(reservationTimeField));
+
+        saveButton.setOnClickListener(v -> {
+            String location = locationField.getText().toString().trim();
+            String website = websiteField.getText().toString().trim();
+            String reservationTime = reservationTimeField.getText().toString().trim();
+            float reviewRating = ratingBar.getRating(); // Get numeric review
+
+            if (location.isEmpty() || website.isEmpty() || reservationTime.isEmpty()) {
+                Toast.makeText(getContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            DiningReservation reservation = new DiningReservation(location, website, reviewRating, reservationTime);
+            diningViewModel.addReservation(reservation);
+
+            Toast.makeText(getContext(), "Reservation added successfully!", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+
+    private void applySortStrategy(SortStrategy strategy) {
+        List<DiningReservation> sortedList = strategy.sort(new ArrayList<>(diningViewModel.getReservations().getValue()));
+        adapter.updateData(sortedList);
+    }
+
 }
