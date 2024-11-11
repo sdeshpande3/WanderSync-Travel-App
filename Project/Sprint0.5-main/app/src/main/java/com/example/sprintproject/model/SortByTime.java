@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+//sort stategy by time
 public class SortByTime implements SortStrategy {
     @Override
     public List<DiningReservation> sort(List<DiningReservation> reservations) {
