@@ -1,5 +1,6 @@
 package com.example.sprintproject.fragments.view;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import com.example.sprintproject.R;
 import com.example.sprintproject.fragments.viewmodel.AccommodationViewModel;
 import com.example.sprintproject.model.Accommodation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AccommodationAdapter extends RecyclerView.Adapter<AccommodationAdapter.ViewHolder> {
 
@@ -42,6 +47,14 @@ public class AccommodationAdapter extends RecyclerView.Adapter<AccommodationAdap
         holder.checkOutDate.setText(accommodation.getCheckOutDate());
         holder.numberOfRooms.setText(String.valueOf(accommodation.getNumberOfRooms()));
         holder.roomType.setText(accommodation.getRoomType());
+
+        // Apply visual indication for upcoming or expired accommodations
+        boolean isUpcoming = isAccommodationUpcoming(accommodation.getCheckOutDate());
+        if (isUpcoming) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#DFFFD6")); // Light green for upcoming
+        } else {
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFD6D6")); // Light red for expired
+        }
     }
 
     @Override
@@ -59,6 +72,18 @@ public class AccommodationAdapter extends RecyclerView.Adapter<AccommodationAdap
             checkOutDate = itemView.findViewById(R.id.textCheckOutDate);
             numberOfRooms = itemView.findViewById(R.id.textNumberOfRooms);
             roomType = itemView.findViewById(R.id.textRoomType);
+        }
+    }
+
+    // Helper method to determine if an accommodation is upcoming
+    private boolean isAccommodationUpcoming(String checkOutDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date outDate = sdf.parse(checkOutDate);
+            return outDate != null && outDate.after(new Date());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

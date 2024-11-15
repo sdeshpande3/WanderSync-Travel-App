@@ -96,7 +96,7 @@ public class DiningFragment extends Fragment {
         EditText locationField = dialogView.findViewById(R.id.editTextLocation);
         EditText websiteField = dialogView.findViewById(R.id.editTextWebsite);
         EditText reservationTimeField = dialogView.findViewById(R.id.editTextReservationTime);
-        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBarReview); // Correct ID reference
+        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBarReview);
         Button saveButton = dialogView.findViewById(R.id.buttonSaveReservation);
 
         reservationTimeField.setOnClickListener(v -> showTimePickerDialog(reservationTimeField));
@@ -105,10 +105,15 @@ public class DiningFragment extends Fragment {
             String location = locationField.getText().toString().trim();
             String website = websiteField.getText().toString().trim();
             String reservationTime = reservationTimeField.getText().toString().trim();
-            float reviewRating = ratingBar.getRating(); // Get numeric review
+            float reviewRating = ratingBar.getRating();
 
             if (location.isEmpty() || website.isEmpty() || reservationTime.isEmpty()) {
                 Toast.makeText(getContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (isDuplicateReservation(location, reservationTime)) {
+                Toast.makeText(getContext(), "A reservation with this location and time already exists.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -126,6 +131,26 @@ public class DiningFragment extends Fragment {
     private void applySortStrategy(SortStrategy strategy) {
         List<DiningReservation> sortedList = strategy.sort(new ArrayList<>(diningViewModel.getReservations().getValue()));
         adapter.updateData(sortedList);
+    }
+
+
+    public boolean validateReservationInput(String location, String website, String time, float rating) {
+        return location != null && !location.isEmpty() &&
+                website != null && !website.isEmpty() &&
+                time != null && !time.isEmpty() &&
+                rating > 0;
+    }
+
+    private boolean isDuplicateReservation(String location, String time) {
+        List<DiningReservation> reservations = diningViewModel.getReservations().getValue();
+        if (reservations != null) {
+            for (DiningReservation reservation : reservations) {
+                if (reservation.getLocation().equalsIgnoreCase(location) && reservation.getReservationTime().equals(time)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
