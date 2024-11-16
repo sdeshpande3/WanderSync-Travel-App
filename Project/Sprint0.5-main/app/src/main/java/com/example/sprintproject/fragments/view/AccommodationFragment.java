@@ -62,7 +62,6 @@ public class AccommodationFragment extends Fragment {
 
         return view;
     }
-
     private void showAddAccommodationDialog() {
         BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_accommodation, null);
@@ -85,11 +84,18 @@ public class AccommodationFragment extends Fragment {
             String location = locationField.getText().toString().trim();
             String checkInDate = checkInField.getText().toString().trim();
             String checkOutDate = checkOutField.getText().toString().trim();
-            int numberOfRooms = Integer.parseInt(roomsField.getText().toString().trim());
+            String roomsText = roomsField.getText().toString().trim();
             String roomType = roomTypeSpinner.getSelectedItem().toString();
 
-            if (location.isEmpty() || checkInDate.isEmpty() || checkOutDate.isEmpty() || roomsField.getText().toString().isEmpty() || roomType.isEmpty()) {
+            if (location.isEmpty() || checkInDate.isEmpty() || checkOutDate.isEmpty() || roomsText.isEmpty() || roomType.isEmpty()) {
                 Toast.makeText(getContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int numberOfRooms = Integer.parseInt(roomsText);
+
+            if (isDuplicateAccommodation(location, checkInDate, checkOutDate)) {
+                Toast.makeText(getContext(), "Accommodation with overlapping dates at this location already exists.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -101,6 +107,7 @@ public class AccommodationFragment extends Fragment {
 
         dialog.show();
     }
+
 
     private void showDatePickerDialog(EditText dateField) {
         Calendar calendar = Calendar.getInstance();
@@ -116,6 +123,25 @@ public class AccommodationFragment extends Fragment {
 
         datePickerDialog.show();
     }
+
+
+    private boolean isDuplicateAccommodation(String location, String checkInDate, String checkOutDate) {
+        List<Accommodation> accommodations = accommodationViewModel.getAccommodations().getValue();
+        if (accommodations != null) {
+            for (Accommodation existing : accommodations) {
+                if (existing.getLocation().equalsIgnoreCase(location) &&
+                        areDatesOverlapping(existing.getCheckInDate(), existing.getCheckOutDate(), checkInDate, checkOutDate)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean areDatesOverlapping(String existingCheckIn, String existingCheckOut, String newCheckIn, String newCheckOut) {
+        return !(newCheckOut.compareTo(existingCheckIn) < 0 || newCheckIn.compareTo(existingCheckOut) > 0);
+    }
+
 
 
 
