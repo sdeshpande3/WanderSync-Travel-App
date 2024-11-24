@@ -4,9 +4,12 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.sprintproject.model.NoteModel;
+
 import com.example.sprintproject.model.Contributor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -21,10 +24,9 @@ public class LogisticsViewModel extends ViewModel {
     }
 
     public void addContributor(String tripID, Contributor contributor, OnCompleteListener<Void> listener) {
-        // Use Firestore's structure for trips and contributors
         firestore.collection("trips").document(tripID)
                 .collection("contributors")
-                .document(contributor.getEmail().replace(".", "_"))  // Replace '.' to avoid issues in Firestore
+                .document(contributor.getEmail().replace(".", "_")) // Sanitize email
                 .set(contributor)
                 .addOnCompleteListener(listener)
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to add contributor: " + e.getMessage()));
@@ -67,4 +69,37 @@ public class LogisticsViewModel extends ViewModel {
     public interface ContributorExistsCallback {
         void onCheck(boolean exists);
     }
+
+    public void addNote(String tripID, String note, OnCompleteListener<DocumentReference> listener) {
+        firestore.collection("trips").document(tripID)
+                .collection("notes")
+                .add(new NoteModel(note, System.currentTimeMillis())) // Create NoteModel
+                .addOnCompleteListener(listener)
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to add note: " + e.getMessage()));
+    }
+
+    public void getNotes(String tripID, NotesCallback callback) {
+        firestore.collection("trips").document(tripID).collection("notes")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        ArrayList<NoteModel> notes = new ArrayList<>();
+                        task.getResult().forEach(doc -> notes.add(doc.toObject(NoteModel.class)));
+                        callback.onSuccess(notes);
+                    } else {
+                        callback.onFailure(task.getException() != null ? task.getException().getMessage() : "Unknown error occurred");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching notes: " + e.getMessage());
+                    callback.onFailure(e.getMessage());
+                });
+    }
+
+    public interface NotesCallback {
+        void onSuccess(ArrayList<NoteModel> notes);
+        void onFailure(String error);
+    }
+
+
 }
