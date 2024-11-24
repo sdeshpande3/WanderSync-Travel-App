@@ -78,10 +78,15 @@ public class UserDatabase {
     }
 
     public void setVacationSetting(Map<String, String> settings) {
+        if (collectionRef == null) {
+            Log.e("UserDatabase", "Collection reference is null. Cannot update vacation settings.");
+            return;
+        }
+
         collectionRef.update("vacationSettings", settings).addOnSuccessListener(f -> {
             Log.d("UserDatabase", "Updated vacation settings");
         }).addOnFailureListener(f -> {
-            Log.e("UserDatabase", "Error updating vacation settings");
+            Log.e("UserDatabase", "Error updating vacation settings: " + f.getMessage());
         });
     }
 
@@ -89,11 +94,12 @@ public class UserDatabase {
     public void addContributor(String tripID, Contributor contributor, OnCompleteListener<Void> listener) {
         DocumentReference tripRef = firestore.collection("trips").document(tripID);
         tripRef.collection("contributors")
-                .document(contributor.getEmail()) // Use email as document ID
+                .document(contributor.getEmail().replace(".", "_")) // Sanitize email
                 .set(contributor)
                 .addOnCompleteListener(listener)
                 .addOnFailureListener(e -> Log.e("UserDatabase", "Failed to add contributor: " + e.getMessage()));
     }
+
 
     // New Method for Fetching Contributors (Optional for read purposes)
     public void getContributors(String tripID, ContributorsCallback callback) {

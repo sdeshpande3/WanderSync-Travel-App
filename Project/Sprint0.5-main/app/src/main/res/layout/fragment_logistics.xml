@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:padding="16dp">
+            android:gravity="center_horizontal">
 
             <!-- Header Section -->
             <LinearLayout
@@ -97,14 +96,12 @@
                 android:textSize="20sp"
                 android:layout_marginTop="16dp" />
 
-            <ListView
-                android:id="@+id/contributorsListView"
+            <LinearLayout
+                android:id="@+id/contributorsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="200dp"
-                android:layout_marginTop="8dp"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="1dp" />
+                android:orientation="vertical"
+                android:layout_marginTop="8dp" />
 
             <!-- Notes Section -->
             <EditText
@@ -130,16 +127,12 @@
                 android:textSize="20sp"
                 android:layout_marginTop="16dp" />
 
-            <ListView
-                android:id="@+id/notesListView"
+            <LinearLayout
+                android:id="@+id/notesContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="200dp"
-                android:layout_marginTop="8dp"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="1dp" />
-
+                android:orientation="vertical"
+                android:layout_marginTop="8dp" />
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
