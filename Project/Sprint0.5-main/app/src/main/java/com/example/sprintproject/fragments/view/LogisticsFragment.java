@@ -37,8 +37,10 @@ public class LogisticsFragment extends Fragment {
     private Button inviteButton;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_logistics, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_logistics, container,
+                false);
 
         contributorsListView = view.findViewById(R.id.contributorsListView);
         inviteButton = view.findViewById(R.id.inviteButton);
@@ -51,7 +53,8 @@ public class LogisticsFragment extends Fragment {
         currentUserID = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
 
         if (currentUserID == null) {
-            Toast.makeText(getContext(), "User not logged in.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "User not logged in.",
+                    Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Current user ID is null.");
             return view;
         }
@@ -60,7 +63,8 @@ public class LogisticsFragment extends Fragment {
         currentTripID = "your_trip_id";
 
         if (currentTripID == null) {
-            Toast.makeText(getContext(), "No active trip found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No active trip found.",
+                    Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Current trip ID is null.");
         } else {
             loadContributors();  // Load contributors when the trip ID is valid
@@ -93,7 +97,8 @@ public class LogisticsFragment extends Fragment {
 
     private void addContributor(String email) {
         if (currentTripID == null || currentTripID.isEmpty()) {
-            Toast.makeText(getContext(), "No active trip found. Cannot add contributor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No active trip found. Cannot add contributor.",
+                    Toast.LENGTH_SHORT).show();
             Log.e(TAG, "addContributor: currentTripID is null or empty.");
             return;
         }
@@ -102,18 +107,24 @@ public class LogisticsFragment extends Fragment {
 
         viewModel.checkContributorExists(currentTripID, email, exists -> {
             if (exists) {
-                Toast.makeText(getContext(), "Contributor already exists.", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Contributor with email " + email + " already exists for trip: " + currentTripID);
+                Toast.makeText(getContext(), "Contributor already exists.",
+                        Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Contributor with email " + email +
+                        " already exists for trip: " + currentTripID);
             } else {
                 viewModel.addContributor(currentTripID, newContributor, task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "User invited successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "User invited successfully.",
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "Contributor added: " + email);
                         loadContributors();
                     } else {
-                        String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error occurred.";
-                        Toast.makeText(getContext(), "Failed to invite user: " + errorMessage, Toast.LENGTH_LONG).show();
-                        Log.e(TAG, "Failed to invite user: " + errorMessage, task.getException());
+                        String errorMessage = task.getException() != null ?
+                                task.getException().getMessage() : "Unknown error occurred.";
+                        Toast.makeText(getContext(), "Failed to invite user: "
+                                + errorMessage, Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "Failed to invite user: " + errorMessage,
+                                task.getException());
                     }
                 });
             }
