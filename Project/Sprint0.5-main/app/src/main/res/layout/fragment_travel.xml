@@ -19,9 +19,9 @@
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:textAlignment="center"
             android:paddingTop="20dp"
             android:text="Travel Screen"
+            android:textAlignment="center"
             android:textSize="20dp" />
 
         <ImageView
