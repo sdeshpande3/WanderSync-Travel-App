@@ -1,5 +1,7 @@
 package com.example.sprintproject.model;
 
+import androidx.annotation.NonNull;
+
 public class DiningReservation {
     private String location;
     private String website;
@@ -48,4 +50,10 @@ public class DiningReservation {
     public void setReservationTime(String reservationTime) {
         this.reservationTime = reservationTime;
     }
+
+    @NonNull
+    public String toString() {
+        return location + " " + reservationTime;
+    }
+
 }

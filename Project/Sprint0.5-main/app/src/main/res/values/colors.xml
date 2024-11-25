@@ -10,4 +10,5 @@
     <color name="default_background">#3d3d3d</color>
     <color name="upcomingColor">#DFFFD6</color> <!-- Light green -->
     <color name="expiredColor">#FFD6D6</color> <!-- Light red -->
+    <color name="background_gray">#F5F5F5</color>
 </resources>

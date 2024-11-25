@@ -1,0 +1,85 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create a Travel Post"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="16dp" />
+
+        <!-- Trip Duration -->
+        <EditText
+            android:id="@+id/tripDurationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Trip Duration (e.g., 3 days)"
+            android:inputType="text" />
+
+        <!-- Transportation Info -->
+        <EditText
+            android:id="@+id/transportationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Transportation Info (e.g., Train, Bus)"
+            android:inputType="text"
+            android:layout_marginTop="16dp" />
+
+
+
+
+        <!-- Notes -->
+        <EditText
+            android:id="@+id/notesInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add Notes About Your Trip"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top"
+            android:layout_marginTop="16dp" />
+
+        <!-- Select Destinations -->
+        <Button
+            android:id="@+id/btnSelectDestinations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Destinations"
+            android:layout_marginTop="16dp" />
+
+        <!-- Select Dining Reservations -->
+        <Button
+            android:id="@+id/btnSelectDining"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Dining Reservations"
+            android:layout_marginTop="16dp" />
+
+        <!-- Select Accommodations -->
+        <Button
+            android:id="@+id/btnSelectAccommodations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Accommodations"
+            android:layout_marginTop="16dp" />
+
+        <!-- Save Post Button -->
+        <Button
+            android:id="@+id/btnSavePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Post"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

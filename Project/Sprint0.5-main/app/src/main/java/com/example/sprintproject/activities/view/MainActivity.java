@@ -16,6 +16,8 @@ import com.example.sprintproject.fragments.view.LogisticsFragment;
 import com.example.sprintproject.fragments.view.AccommodationFragment;
 import com.example.sprintproject.fragments.view.DiningFragment;
 import com.example.sprintproject.fragments.view.TravelFragment;
+import com.example.sprintproject.fragments.view.TravelCommunityFragment;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new DiningFragment());
             } else if (clicked.getItemId() == R.id.accommodations) {
                 replaceFragment(new AccommodationFragment());
-            } else if (clicked.getItemId() == R.id.travel) {
-                replaceFragment(new TravelFragment());
+            }
+            else if (clicked.getItemId() == R.id.community) {
+                replaceFragment(new TravelCommunityFragment());
             }
 
             return true;

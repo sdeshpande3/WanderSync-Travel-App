@@ -23,9 +23,10 @@
         android:title="Accommodations"
         android:icon="@drawable/hotel" />
 
+
     <item
-        android:id="@+id/travel"
-        android:title="Travel"
-        android:icon="@drawable/car" />
+        android:id="@+id/community"
+        android:icon="@drawable/community_img"
+        android:title="Community" />
 
 </menu>
