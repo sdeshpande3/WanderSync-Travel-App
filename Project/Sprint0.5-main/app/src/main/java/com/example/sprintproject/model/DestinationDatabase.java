@@ -2,6 +2,8 @@ package com.example.sprintproject.model;
 
 import android.util.Log;
 
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -134,6 +136,10 @@ public class DestinationDatabase {
         private String startDate;
         private String endDate;
 
+        public TravelLog() {
+
+        }
+
         public TravelLog(String location, String startDate, String endDate) {
             this.location = location;
             this.startDate = startDate;
@@ -151,5 +157,8 @@ public class DestinationDatabase {
         public String getEndDate() {
             return endDate;
         }
+
+        @NonNull
+        public String toString(){ return location + " " + startDate + " " + endDate; }
     }
 }

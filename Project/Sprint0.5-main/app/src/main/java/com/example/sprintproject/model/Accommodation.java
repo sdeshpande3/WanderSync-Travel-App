@@ -1,5 +1,7 @@
 package com.example.sprintproject.model;
 
+import androidx.annotation.NonNull;
+
 public class Accommodation {
     private String location;
     private String checkInDate;
@@ -57,5 +59,9 @@ public class Accommodation {
 
     public void setRoomType(String roomType) {
         this.roomType = roomType;
+    }
+    @NonNull
+    public String toString() {
+        return location + " " + checkInDate + "-" + checkOutDate + " " + numberOfRooms + " " + roomType;
     }
 }
