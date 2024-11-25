@@ -41,7 +41,7 @@ public class LogInActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.login_button);
         Button createAccountButton = findViewById(R.id.create_account_button);
 
-        // Navigate to the Sign Up page
+        // Navigate to the Sign Up page from the original page
         createAccountButton.setOnClickListener(v -> {
             Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
             startActivity(intent);
