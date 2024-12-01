@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sprintproject.R;
 import com.example.sprintproject.model.TravelPost;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
-import java.util.List;
-
-public class TravelPostAdapter extends RecyclerView.Adapter<TravelPostAdapter.TravelPostViewHolder> {
+public class TravelPostAdapter extends
+        RecyclerView.Adapter<TravelPostAdapter.TravelPostViewHolder> {
 
     private List<TravelPost> posts;
 
@@ -39,28 +39,32 @@ public class TravelPostAdapter extends RecyclerView.Adapter<TravelPostAdapter.Tr
     public void onBindViewHolder(@NonNull TravelPostViewHolder holder, int position) {
         TravelPost post = posts.get(position);
 
-        holder.userName.setText("User Name: " + post.getUserName());
-        holder.tripDuration.setText("Duration: " + post.getTripDuration());
-        holder.destinations.setText("Destinations: " + formatList(post.getDestinations()));
-        holder.dining.setText("Dining: " + formatList(post.getDiningReservations()));
-        holder.accommodations.setText("Accommodations: " + formatList(post.getAccommodations()));
-        holder.notes.setText("Notes: " + post.getNotes());
-        holder.userEmail.setText("User Email: " + post.getUserId());
-        holder.transportation.setText("Transportation: " + post.getTransportation());
-    }
-
-    private String formatList(List<?> list) {
-        if (list == null || list.isEmpty()) return "None";
-        return list.stream().map(Object::toString).collect(Collectors.joining(", "));
+        holder.bind(post);
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return posts != null ? posts.size() : 0;
+    }
+
+    private String formatList(List<?> list) {
+        if (list == null || list.isEmpty()) {
+            return "None";
+        }
+        return list.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
     }
 
     static class TravelPostViewHolder extends RecyclerView.ViewHolder {
-        TextView userName, tripDuration, transportation, notes, destinations, dining, accommodations, userEmail;
+        private final TextView userName;
+        private final TextView tripDuration;
+        private final TextView transportation;
+        private final TextView notes;
+        private final TextView destinations;
+        private final TextView dining;
+        private final TextView accommodations;
+        private final TextView userEmail;
 
         public TravelPostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +76,26 @@ public class TravelPostAdapter extends RecyclerView.Adapter<TravelPostAdapter.Tr
             dining = itemView.findViewById(R.id.tvDining);
             accommodations = itemView.findViewById(R.id.tvAccommodations);
             userEmail = itemView.findViewById(R.id.tvUserEmail);
+        }
+
+        public void bind(TravelPost post) {
+            userName.setText("User Name: " + post.getUserName());
+            tripDuration.setText("Duration: " + post.getTripDuration());
+            destinations.setText("Destinations: " + formatList(post.getDestinations()));
+            dining.setText("Dining: " + formatList(post.getDiningReservations()));
+            accommodations.setText("Accommodations: " + formatList(post.getAccommodations()));
+            notes.setText("Notes: " + post.getNotes());
+            userEmail.setText("User Email: " + post.getUserId());
+            transportation.setText("Transportation: " + post.getTransportation());
+        }
+
+        private String formatList(List<?> list) {
+            if (list == null || list.isEmpty()) {
+                return "None";
+            }
+            return list.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining(", "));
         }
     }
 }

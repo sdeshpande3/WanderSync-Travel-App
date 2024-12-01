@@ -33,7 +33,8 @@ public class DiningAdapter extends RecyclerView.Adapter<DiningAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reservation, parent, false);
+        View view = LayoutInflater.from(
+                parent.getContext()).inflate(R.layout.item_reservation, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,9 +49,11 @@ public class DiningAdapter extends RecyclerView.Adapter<DiningAdapter.ViewHolder
         // Apply visual indication based on whether the reservation is upcoming or expired
         boolean isUpcoming = isReservationUpcoming(reservation.getReservationTime());
         if (isUpcoming) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#DFFFD6")); // Light green for upcoming
+            holder.itemView.setBackgroundColor(
+                    Color.parseColor("#DFFFD6")); // Light green for upcoming
         } else {
-            holder.itemView.setBackgroundColor(Color.parseColor("#FFD6D6")); // Light red for expired
+            holder.itemView.setBackgroundColor(Color.parseColor(
+                    "#FFD6D6")); // Light red for expired
         }
     }
 

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sprintproject.R;
 import com.example.sprintproject.fragments.viewmodel.TravelCommunityViewModel;
-import com.example.sprintproject.model.TravelPost;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,8 @@ public class TravelCommunityFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_travel_community, container, false);
+        View view = inflater.inflate(
+                R.layout.fragment_travel_community, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPosts);
         Button addPostButton = view.findViewById(R.id.btnAddPost);
@@ -59,9 +59,11 @@ public class TravelCommunityFragment extends Fragment {
         dialog.setPostListener(post -> {
             viewModel.addTravelPost(post, task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Post added successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),
+                            "Post added successfully!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e("TravelCommunity", "Failed to add post: " + task.getException().getMessage());
+                    Log.e(
+                            "TravelCommunity", "Failed to add post: " + task.getException().getMessage());
                     Toast.makeText(getContext(), "Failed to add post.", Toast.LENGTH_SHORT).show();
                 }
             });

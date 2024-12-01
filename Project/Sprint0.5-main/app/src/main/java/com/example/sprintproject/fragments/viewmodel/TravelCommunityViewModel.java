@@ -44,6 +44,7 @@ public class TravelCommunityViewModel extends ViewModel {
         firestore.collection("community_posts")
                 .add(post)
                 .addOnCompleteListener(listener)
-                .addOnFailureListener(e -> Log.e("TravelCommunity", "Failed to add post: " + e.getMessage()));
+                .addOnFailureListener(
+                        e -> Log.e("TravelCommunity", "Failed to add post: " + e.getMessage()));
     }
 }
