@@ -125,4 +125,7 @@ public class UserDatabase {
     }
 
     public interface ContributorsCallback {
-  
+        void onSuccess(ArrayList<Contributor> contributors);
+        void onFailure(String error);
+    }
+}
