@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.example.sprintproject.model.Contributor;
 
 
 
@@ -91,19 +90,23 @@ public class UserDatabase {
     }
 
     // New Method for Adding Contributors
-    public void addContributor(String tripID, Contributor contributor, OnCompleteListener<Void> listener) {
-        DocumentReference tripRef = firestore.collection("trips").document(tripID);
+    public void addContributor(String tripID,
+                               Contributor contributor, OnCompleteListener<Void> listener) {
+        DocumentReference tripRef = firestore.collection(
+                "trips").document(tripID);
         tripRef.collection("contributors")
                 .document(contributor.getEmail().replace(".", "_")) // Sanitize email
                 .set(contributor)
                 .addOnCompleteListener(listener)
-                .addOnFailureListener(e -> Log.e("UserDatabase", "Failed to add contributor: " + e.getMessage()));
+                .addOnFailureListener(e -> Log.e(
+                        "UserDatabase", "Failed to add contributor: " + e.getMessage()));
     }
 
 
     // New Method for Fetching Contributors (Optional for read purposes)
     public void getContributors(String tripID, ContributorsCallback callback) {
-        firestore.collection("trips").document(tripID).collection("contributors")
+        firestore.collection("trips").document(
+                tripID).collection("contributors")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
@@ -114,7 +117,8 @@ public class UserDatabase {
                         });
                         callback.onSuccess(contributors);
                     } else {
-                        callback.onFailure(task.getException() != null ? task.getException().getMessage() : "Unknown error");
+                        callback.onFailure(task.getException() != null
+                                ? task.getException().getMessage() : "Unknown error");
                     }
                 })
                 .addOnFailureListener(e -> callback.onFailure(e.getMessage()));

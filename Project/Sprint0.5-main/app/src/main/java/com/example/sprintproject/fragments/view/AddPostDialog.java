@@ -15,9 +15,6 @@ import com.example.sprintproject.model.Accommodation;
 import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.model.DestinationDatabase;
 import com.example.sprintproject.fragments.viewmodel.DiningViewModel;
-
-import com.example.sprintproject.fragments.view.TravelPostFactory;
-
 import com.google.firebase.auth.FirebaseAuth;
 
 import android.widget.Toast;

@@ -12,7 +12,8 @@ import java.util.List;
 
 public class AccommodationViewModel extends ViewModel {
 
-    private final MutableLiveData<List<Accommodation>> accommodations = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<List<Accommodation>> accommodations =
+            new MutableLiveData<>(new ArrayList<>());
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListenerRegistration listenerRegistration;
 
@@ -27,7 +28,9 @@ public class AccommodationViewModel extends ViewModel {
     public void loadAccommodations() {
         listenerRegistration = db.collection("accommodations")
                 .addSnapshotListener((querySnapshot, e) -> {
-                    if (e != null || querySnapshot == null) return;
+                    if (e != null || querySnapshot == null) {
+                        return;
+                    }
 
                     List<Accommodation> updatedAccommodations = new ArrayList<>();
                     querySnapshot.forEach(doc -> {
@@ -41,6 +44,4 @@ public class AccommodationViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (listenerRegistration != null) listenerRegistration.remove();
-    }
-}
+        if (listenerRegistration

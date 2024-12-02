@@ -107,8 +107,8 @@ public class TravelPost implements TravelPostFormatter {
     }
     @Override
     public String format() {
-        return "Trip by: " + userId + "\n" +
-                "Duration: " + tripDuration + "\n" +
-                "Destinations: " + destinations.size() + " places\n";
+        return "Trip by: " + userId + "\n"
+                + "Duration: " + tripDuration + "\n"
+                + "Destinations: " + destinations.size() + " places\n";
     }
 }

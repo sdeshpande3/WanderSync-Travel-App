@@ -13,7 +13,8 @@ public class Accommodation {
     public Accommodation() {
     }
 
-    public Accommodation(String location, String checkInDate, String checkOutDate, int numberOfRooms, String roomType) {
+    public Accommodation(String location, String checkInDate,
+                         String checkOutDate, int numberOfRooms, String roomType) {
         this.location = location;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
@@ -62,6 +63,7 @@ public class Accommodation {
     }
     @NonNull
     public String toString() {
-        return location + " " + checkInDate + "-" + checkOutDate + " " + numberOfRooms + " " + roomType;
+        return location + " "
+                + checkInDate + "-" + checkOutDate + " " + numberOfRooms + " " + roomType;
     }
 }
