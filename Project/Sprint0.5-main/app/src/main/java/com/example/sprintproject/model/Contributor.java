@@ -4,8 +4,7 @@ public class Contributor {
     private String email;
     private boolean status;  // Indicates if the contributor is active
 
-    // Default constructor required for Firebase
-    public Contributor() {}
+    public Contributor() { }
 
     public Contributor(String email, boolean status) {
         this.email = email;
