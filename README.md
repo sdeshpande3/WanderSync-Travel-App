@@ -1,6 +1,6 @@
 # WanderSync
 
-**WanderSync** is a collaborative travel planning Android app that helps groups of users organize trips together. Designed and developed as part of a semester-long software engineering course at Georgia Tech, the app focuses on ease of use, group coordination, and secure data management.
+**WanderSync** is a collaborative travel planning Android app that helps groups of users organize trips together. Developed as part of a semester-long course at Georgia Tech, the app focuses on ease of use, group coordination, and secure data management.
 
 ## 🚀 Features
 
